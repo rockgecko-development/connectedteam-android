@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:enterFadeDuration="500" android:exitFadeDuration="500">
+    <item android:state_pressed="true" android:drawable="@drawable/list_selector_pressed" />
+    
+    <!-- state_selected used for key navigation-->
+	<item android:state_selected="true" android:drawable="@drawable/list_selector_selected"/>
+	<!-- state_focused used for  api<11 selection dialogs-
+	<item android:state_focused="true" android:drawable="@drawable/list_selector_focused" / --> 
+	
+	 <item android:drawable="@color/ribbonmenu_background"/>
+</selector> 

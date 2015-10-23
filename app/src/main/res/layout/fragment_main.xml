@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin_top"
+
+    android:paddingBottom="@dimen/margin_bottom"
+    >
+
+    <Button
+        android:id="@+id/button_appcompat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:text="AppCompat Button" />
+    
+      <Button
+        android:id="@+id/button_styled"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:gravity="center"
+        android:drawableLeft="@drawable/menu_default"
+        android:background="@drawable/card_background_with_states"
+        android:text="Card button" />
+      
+      <TextView
+          android:layout_marginLeft="@dimen/margin_left"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Recent Searches"/>
+      
+      <Button
+        android:id="@+id/button_packages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:gravity="left|center_vertical"
+        android:drawableLeft="@drawable/menu_default"
+        android:background="@drawable/card_background_with_states"
+        android:text="Packages" />
+    
+      <Button
+        android:id="@+id/button_cars"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:gravity="left|center_vertical"
+        android:drawableLeft="@drawable/menu_default"
+        android:background="@drawable/card_background_with_states"
+        android:text="Car Hire" />
+      
+      <Button
+        android:id="@+id/button_discovery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/small_margin"
+        android:gravity="left|center_vertical"
+        android:drawableLeft="@drawable/menu_default"
+        android:background="@drawable/card_background_with_states"
+        android:text="Discovery - Where can I go?" />
+
+    <TextView
+
+        android:text="@string/app_name"
+        android:id="@+id/debug_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

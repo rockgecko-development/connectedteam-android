@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+	
+	android:drawable="@color/card_primary_cell_bg"
+        android:insetLeft="@dimen/card_margin_lr"        
+        android:insetRight="@dimen/card_margin_lr"
+        android:insetTop="@dimen/card_margin_tb"
+        android:insetBottom="@dimen/card_margin_tb" />

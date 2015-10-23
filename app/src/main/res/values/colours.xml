@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="eqpay_color">#0092FF</color>
+
+    <color name="theme_highlight">@color/eqpay_color</color>
+    <color name="theme_highlight_bright">#ff3F92BA</color>
+
+    <color name="window_background">#FFF5F5F5</color>
+
+    <color name="theme_primary">@color/theme_highlight</color>
+    <color name="theme_primary_dark">#ff005FA6</color>
+
+    <color name="theme_accent">#ffffff</color>
+    <color name="theme_control_normal">@color/theme_highlight</color>
+    <color name="theme_control_activated">@color/theme_highlight_bright</color>
+    <color name="theme_control_highlight">@color/theme_accent</color>
+
+    <color name="text_color_highight">@color/eqpay_color</color>
+
+    <color name="body_text_1">#000000</color>
+    <color name="body_text_2">#555555</color>
+    <color name="body_text_3">#A2A2A2</color>
+    <color name="body_text_disabled">#44000000</color>
+    <color name="body_text_disabled_inverse">#66cccccc</color>
+
+    <color name="body_text_1_inverse">#E9EDF0</color>
+    <color name="body_text_2_inverse">#99ffffff</color>
+
+    <color name="body_text_1_positive">#ff93D57F</color>
+    <color name="body_text_1_warning">#ffEF9609</color>
+    <color name="body_text_1_negative">#ffD82B23</color>
+
+    <color name="profile_trainer">#ff29BC67</color>
+    <color name="profile_owner">#ff0092FF</color>
+    <color name="profile_serviceprovider">#ffEF9609</color>
+
+    <color name="accent_1">#ff3F92BA</color>
+
+
+    <color name="action_bar_title">#fff3f3f3</color>
+    <color name="action_bar_subtitle">#fff3f3f3</color>
+
+    <color name="separator_item_background">#ffC5CDD0</color>
+    <color name="separator_sub_background">#7f7f7f</color>
+
+    <color name="ribbonmenu_background">#ff525252</color>
+    <color name="ribbonmenu_item_selected">#ff4F4F4F</color>
+    <color name="list_selector_pressed">@color/card_background</color>
+    <color name="list_selector_selected">@color/theme_accent</color>
+    <color name="list_selector_disabled">#66cccccc</color>
+
+
+    <color name="shape_text_textColour">#666666</color>
+    <color name="shape_text_outlineColour">#dddddd</color>
+    <color name="shape_text_backgroundColour">#eeeeee</color>
+
+
+
+    <color name="divider_faint">#eeeeee</color>
+
+    <color name="card_background">#eeeeee</color>
+    <color name="card_primary_cell_bg">#ffffffff</color>
+    <color name="card_activated_colour">@color/eqpay_color</color>
+    <color name="checkout_dark_overlay">#aa000000</color>
+
+
+    <color name="action_button">@color/theme_highlight</color>
+    <color name="button_action">@color/theme_highlight</color>
+
+    <color name="button_alternate">#ffFF9818</color>
+
+
+    <color name="button_disabled">#ffC5CDD0</color>
+
+    <color name="button_pressed">#4DB3FF</color>
+    <color name="button_activated">#ff3F92BA</color>
+    <color name="button_alternate_pressed">#ffEC5C58</color>
+
+    <color name="button_yes">@color/action_button</color>
+    <color name="button_no">@color/holo_red_dark</color>
+
+    <color name="default_background_clamp">#0f0c11</color>
+    <color name="landing_background">#aa000000</color>
+    <color name="result_list_protection">#88333333</color>
+
+
+
+    <!-- A light Holo shade of blue -->
+    <color name="holo_blue_light">#ff33b5e5</color>
+    <!-- A light Holo shade of green -->
+    <color name="holo_green_light">#ff99cc00</color>
+    <!-- A light Holo shade of red -->
+    <color name="holo_red_light">#ffff4444</color>
+    <!-- A dark Holo shade of blue -->
+    <color name="holo_blue_dark">#ff0099cc</color>
+    <!-- A dark Holo shade of green -->
+    <color name="holo_green_dark">#ff669900</color>
+    <!-- A dark Holo shade of red -->
+    <color name="holo_red_dark">#ffcc0000</color>
+    <!-- A Holo shade of purple -->
+    <color name="holo_purple">#ffaa66cc</color>
+    <!-- A light Holo shade of orange -->
+    <color name="holo_orange_light">#ffffbb33</color>
+    <!-- A dark Holo shade of orange -->
+    <color name="holo_orange_dark">#ffff8800</color>
+    <!-- A really bright Holo shade of blue -->
+    <color name="holo_blue_bright">#ff00ddff</color>
+</resources>

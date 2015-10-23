@@ -1,0 +1,127 @@
+<resources>
+
+    <string name="app_name">ConnectED</string>
+
+    <string name="app_version_date">24/10/2015</string>
+    <string name="release_notes">
+        -Initial release\n
+        </string>
+
+    <string name="app_force_update_store"><Data><![CDATA[
+        This version is out of date and needs to be updated.<br />
+	    Changes in v%1$s %2$s:<br />%3$s
+	    ]]></Data></string>
+
+    <string name="app_update_available_heading">Update available</string>
+
+	<string name="app_update_available_store"><Data><![CDATA[
+        Changes in v%1$s %2$s:<br />%3$s<br />
+        Update now?
+	    ]]></Data></string>
+
+    <string name="home_copyright">"%s ConnectED"</string>
+
+
+    <string name="requesting">Loading&#x2026;</string>
+    <string name="submitting">Submitting&#x2026;</string>
+    <string name="searching">Searching&#x2026;</string>
+    <string name="redirecting">Redirecting&#x2026;</string>
+    <string name="pending">Pending&#x2026;</string>
+    <string name="waiting_for_location">Waiting for location&#x2026;</string>
+
+    <string name="request_fail">Sorry, your connection was lost. Please try again.</string>
+    <string name="request_fail_server_error">There was a problem with our server. Please try again later.</string>
+    <string name="request_fail_unauthorized">"Sorry, your session has expired. Pelase log in again."</string>
+    <string name="request_fail_re_auth">Login expired, refreshing&#x2026;</string>
+    <string name="no_internet_available">No Internet Available</string>
+    <string name="empty_result">There is currently no data available.</string>
+    
+     <string name="refresh">Refresh</string>
+    <string name="submit">Submit</string>
+	<string name="cancel">Cancel</string>
+	<string name="clear">Clear</string>
+	<string name="back">Back</string>
+	<string name="ok">OK</string>	
+	<string name="save">Save</string>
+	<string name="edit">Edit</string>
+	<string name="done">Done</string>
+	<string name="search">Search</string>	
+	<string name="delete">Delete</string>
+	<string name="error">Error</string>
+	<string name="yes">Yes</string>
+	<string name="no">No</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
+	<string name="retry">Retry</string>
+	<string name="dismiss">Dismiss</string>
+	<string name="message">Message</string>
+	<string name="expired">Expired</string>
+
+
+	
+	<string name="rbm_item_logout">Logout</string>
+
+    <string name="licences">Open Source Licences</string>
+
+
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+    <string name="activity_account">My Account</string>
+
+    <string name="menu_portfolio">Portfolio</string>
+    <string name="menu_portfolio_owner">My Horses</string>
+    <string name="menu_my_account">Account</string>
+    <string name="menu_invoices">Invoices</string>
+    <string name="menu_switch_trainer">Switch to Trainer Profile</string>
+    <string name="menu_switch_owner">Switch to Owner Profile</string>
+    <string name="menu_switch_serviceprovider">Switch to Service Provider Profile</string>
+    <string name="menu_help">Switch to Service Provider Profile</string>
+    <string name="menu_logout">Logout</string>
+    <string name="menu_settings">Settings</string>
+
+    <!--home-->
+    <string name="login_button">Log In</string>
+    <string name="signup_button">Create an Account</string>
+    <string name="forgot_password">Forgot your password?</string>
+    <string name="forgot_password_message">Enter your email address below.\nA link will be sent to reset your password.</string>
+    <string name="forgot_password_submitted">Please check your email shortly to update your password.</string>
+    <string name="email_login_hint">Email</string>
+    <string name="password_login_hint">Password</string>
+
+    <!--signup -->
+    <string name="firstname_hint">First Name</string>
+    <string name="surname_hint">Last Name</string>
+    <string name="username_hint">Screen Name (cannot be changed)</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Choose a Password</string>
+    <string name="password_new_hint">New Password</string>
+    <string name="password_confirm_hint">Confirm Password</string>
+    <string name="promo_code_hint">Promo Code</string>
+    <string name="validation_min_age_for_signup">Sorry, you must be 18 years or older to create a profile on connectED.</string>
+    <!--customer details -->
+    <string name="address_heading_incomplete">Required for Account Verification</string>
+    <string name="address_heading_complete">Personal Details</string>
+    <string name="dob_title">Date of Birth</string>
+    <string name="suburb_hint">City/Town</string>
+    <string name="postcode_hint">Postcode</string>
+
+    <string name="amount_error">Invalid amount</string>
+
+
+
+
+
+
+    <string name="username_error">A screen name is required</string>
+    <string name="email_error">A valid email address is required</string>
+
+
+
+    <string name="alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+
+
+    <string name="search_match_other">Matches Other Field</string>
+    <string name="share_referral_message">Use my code to sign up to connectED! %1$s</string>
+
+</resources>

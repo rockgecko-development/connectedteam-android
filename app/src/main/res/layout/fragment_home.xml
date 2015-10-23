@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="?attr/colorPrimaryDark"
+    >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/logo_large"/>
+    <TextView
+
+        android:text="@string/app_name"
+        android:id="@+id/app_name"
+        style="@style/ListHeadingText.Inverse"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        android:layout_height="wrap_content"/>
+    <View
+       android:layout_width="0dp"
+       android:layout_height="0dp"
+       android:layout_weight="1"/>
+
+    <TextView
+
+        android:text="@string/app_name"
+        android:id="@+id/debug_text"
+        style="@style/ListSubText.Inverse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:id="@+id/login_signup_buttons_container"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:showDividers="middle"
+        android:background="@color/button_action"
+        android:divider="@drawable/abc_list_divider_holo_light">
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/login_button"
+            android:textColor="@drawable/textcolour_button_white"
+
+            android:background="@drawable/button_transparent"/>
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/signup_button"
+            android:textColor="@drawable/textcolour_button_white"
+            android:background="@drawable/button_transparent"/>
+    </LinearLayout>
+
+</LinearLayout>

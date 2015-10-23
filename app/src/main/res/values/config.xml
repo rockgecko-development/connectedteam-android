@@ -1,0 +1,21 @@
+<resources>
+
+    
+    
+
+     <string name="server_prod">"http://eqpayandroidapiau-stag.azurewebsites.net/"</string>
+
+     <string name="server_resources">"http://eqpaywebau-dev.azurewebsites.net/"</string>
+     <string name="server_airline_logos_format">"http://api.webjet.com.au/WebjetTSA/Images/AirlineLogos/%1$s.gif"</string>
+     <string name="server_gravatar_format">"http://www.gravatar.com/avatar/%1$s.jpg"</string>
+     <string name="server_gravatar_icon_empty_link">"http://www.gravatar.com"</string>
+     <string name="server_referral_format">"http://eqpaywebau-dev.azurewebsites.net/#!/referralSignUp/%1$s"</string>
+
+     <string name="google_maps_android_api_key">"...TODO..."</string>
+
+     <string name="app_package">au.com.eqpay</string>
+     <string name="IAppLocaleProvider_impl">au.com.eqpay.config.EQPayAppLocaleProvider</string>
+
+    
+
+</resources>

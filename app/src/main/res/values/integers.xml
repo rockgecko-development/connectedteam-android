@@ -1,0 +1,12 @@
+<resources>
+    <integer name="card_flip_time_full">300</integer>
+    <integer name="card_flip_time_half">150</integer>
+    <integer name="anim_time_long">500</integer>
+    <integer name="anim_time_medium">400</integer>
+    <integer name="anim_time_short">200</integer>
+    <integer name="anim_time_map_expand">250</integer>
+    <integer name="anim_time_result_detail_transition">250</integer>
+
+
+
+</resources>

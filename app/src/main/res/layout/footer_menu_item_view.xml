@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<au.com.eqpay.ui.ribbonmenu.FooterMenuItemView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:focusable="true"
+    android:paddingTop="4dip"
+    android:paddingBottom="4dip"
+    android:paddingLeft="0dip"
+    android:paddingRight="0dip"
+    android:drawablePadding="0dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu"
+    android:textSize="12sp"
+    style="?attr/actionButtonStyle"
+    android:textColor="@drawable/textcolour_button_white"
+
+    />
+
+

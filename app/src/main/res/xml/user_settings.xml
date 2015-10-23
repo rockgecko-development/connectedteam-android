@@ -1,0 +1,50 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings">
+     <PreferenceCategory 
+        android:title="General"
+        >
+    <Preference
+            android:key="pref_key_app_locale"
+            android:persistent="false"
+            android:title="Choose API"
+            >
+           
+        </Preference>
+
+
+   </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="Info"
+        >
+       
+       
+        <Preference
+            android:key="pref_key_support"
+            android:persistent="false"
+            android:title="Contact Support">
+            
+             </Preference>
+         <Preference
+            
+            android:persistent="false"
+            android:title="@string/licences"            
+            >
+            <intent
+              	android:targetPackage="@string/app_package"
+            	android:targetClass="au.com.eqpay.activity.GenericDetailActivity"
+            >
+            <extra android:name="GenericDetailActivity.FragmentClass" android:value="au.com.eqpay.activity.WebFragment" />
+            <extra android:name="GenericDetailActivity.Title" android:value="@string/licences" />
+            <extra android:name="WebFragment.RequestedURL" android:value="file:///android_asset/licences.html" />
+            
+            </intent>
+        </Preference>
+        <Preference
+            android:key="pref_key_about"
+            android:persistent="false"
+            android:title="About"/>
+       
+
+    </PreferenceCategory>
+</PreferenceScreen>
