@@ -32,8 +32,8 @@
         <item name="colorControlActivated">@color/theme_control_activated</item>
         <item name="colorControlHighlight">@color/theme_control_highlight</item>
 
-        <item name="actionBarTheme">@style/ActionBarTheme.Solid.EQPay</item>
-        <item name="actionBarStyle">@style/ActionBar.Solid.EQPay</item>
+        <item name="actionBarTheme">@style/ActionBarTheme.Solid.Connected</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.Connected</item>
         <item name="actionBarTabTextStyle">@style/ActionBarTabText</item>
         <item name="actionMenuTextColor">@color/action_bar_subtitle</item>
         <item name="android:actionMenuTextColor">@color/action_bar_subtitle</item>
@@ -45,10 +45,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="ActionBarTheme.Solid.EQPay" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+    <style name="ActionBarTheme.Solid.Connected" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/action_bar_title</item>
     </style>
-    <style name="ActionBar.Solid.EQPay" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+    <style name="ActionBar.Solid.Connected" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
         <item name="elevation">0dp</item>
         <item name="android:titleTextStyle">@style/ActionBarTitleText</item>
         <!-- Support library compatibility -->
@@ -124,6 +124,38 @@
         <item name="android:minHeight">@dimen/bottom_action_button_height</item>
         <item name="android:textColor">@drawable/textcolour_button_white</item>
         <item name="android:background">@drawable/button_action_solid</item>
+
+    </style>
+
+    <style name="TableElement">
+
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+
+    </style>
+    <style name="TableContainer">
+        <item name="android:background">@color/card_primary_cell_bg</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+        <item name="android:orientation">horizontal</item>
+
+
+    </style>
+
+    <style name="TableLabel" >
+        <item name="android:layout_width">@dimen/table_label_width</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/body_text_1</item>
 
     </style>
 

@@ -41,7 +41,7 @@
                 android:id="@+id/spinner_email_domain"></Spinner>
 </LinearLayout>
     <EditText
-        android:id="@+id/login_password"
+        android:id="@+id/edit_password"
         android:hint="password"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
@@ -49,6 +49,51 @@
         android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        style="@style/TableContainer">
+        <TextView
+            style="@style/TableLabel"
+            android:text="Title"
+            />
+        <Spinner
+            android:id="@+id/spinner_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        style="@style/TableContainer">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/edit_firstname"
+            android:hint="First name"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/edit_surname"
+            android:hint="Surname"/>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        style="@style/TableContainer">
+        <TextView
+            style="@style/TableLabel"
+            android:text="Specialty"
+            />
+        <EditText
+            style="@style/TableElement"
+            android:hint="Specialty"
+            android:id="@+id/edit_specialty"/>
     </LinearLayout>
     <TextView
         android:layout_width="match_parent"

@@ -67,6 +67,7 @@
     <dimen name="radio_button_conner_radius">@dimen/button_corner_radius</dimen>
     <dimen name="radio_button_stroke_border">0dp</dimen>
 
+    <dimen name="table_label_width">130dp</dimen>
 
 
     <dimen name="bottom_action_button_height">60dp</dimen>

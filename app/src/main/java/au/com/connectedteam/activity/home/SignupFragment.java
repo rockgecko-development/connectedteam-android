@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 import com.koushikdutta.ion.Response;
@@ -34,6 +35,8 @@ import au.com.connectedteam.util.FuncEx;
 import au.com.connectedteam.util.ParseUtils;
 import au.com.connectedteam.util.StringUtils;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -46,25 +49,28 @@ public class SignupFragment extends BaseIonFragment {
     public static final String ARG_CUSTOMER = "customer";
     public static final String ARG_PASSWORD_1 = "password1";
     public static final String ARG_PASSWORD_2 = "password2";
-    public static final String ARG_PROMO_CODE = "promoCode";
 
-    private ParseUser mCustomer;
-    private String mPassword1, mPassword2, mEmailPrefix, mEmailSuffix;
+    private User mCustomer;
     private List<ParseObject> mHospitalAvails;
 
     AQuery aq;
+
+    public static class User implements Serializable{
+        String password, emailPrefix, emailSuffix, firstName, lastName, rank, specialty;
+        String getEmail(){
+            if(StringUtils.isAnyNullOrEmpty(emailPrefix, emailSuffix)) return null;
+            return String.format("%s@%s", emailPrefix, emailSuffix);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if(savedInstanceState!=null){
-            String userJson= savedInstanceState.getString(ARG_CUSTOMER);
-            mCustomer = ParseUtils.getGson().fromJson(userJson, ParseUser.class);
-            mPassword1 = savedInstanceState.getString(ARG_PASSWORD_1);
-            mPassword2 = savedInstanceState.getString(ARG_PASSWORD_2);
+            mCustomer = (User) savedInstanceState.getSerializable(ARG_CUSTOMER);
         }
-        if(mCustomer==null)mCustomer=new ParseUser();
+        if(mCustomer==null)mCustomer=new User();
 
 
     }
@@ -104,7 +110,7 @@ public class SignupFragment extends BaseIonFragment {
     }
 
     private void modelToUIIfReady(){
-        if(mHospitalAvails!=null) modelToUI();
+        if(isResumed() && mHospitalAvails!=null) modelToUI();
     }
 
     @Override
@@ -116,24 +122,36 @@ public class SignupFragment extends BaseIonFragment {
     private void clearFocusAndSubmit() {
         View focussedView = getView().findFocus();
         if (focussedView != null) focussedView.clearFocus();
-        List<String> validationErrors = CustomerHelper.validate(mCustomer);
-        boolean passwordsOK = !StringUtils.isAnyNullOrEmpty(mPassword1, mPassword2) && mPassword1.equals(mPassword2) && mPassword1.length()>0;
-        if(!passwordsOK) validationErrors.add("Passwords do not match");
-        else if (mPassword2.length()<CustomerHelper.MIN_PASSWORD_LENGTH)
+        List<String> validationErrors = new ArrayList<>();
+        //boolean passwordsOK = !StringUtils.isAnyNullOrEmpty(mPassword1) && mPassword1.length()>0;
+        //if(!passwordsOK) validationErrors.add("Passwords do not match");
+        final ParseUser parseUser = new ParseUser();
+        if (mCustomer.password==null || mCustomer.password.length()<CustomerHelper.MIN_PASSWORD_LENGTH)
             validationErrors.add(String.format("A valid password is required of at least %d characters", CustomerHelper.MIN_PASSWORD_LENGTH));
+        else parseUser.setPassword(mCustomer.password);
+        String email = mCustomer.getEmail();
+        if(email!=null) {
+            parseUser.setEmail(email);
+            parseUser.setUsername(email);
+        }
+        parseUser.put("firstName", mCustomer.firstName);
+        parseUser.put("lastName", mCustomer.lastName);
+        validationErrors.addAll(CustomerHelper.validate(parseUser));
+
         if(validationErrors.size()>0){
             aq.id(R.id.validation).text(StringUtils.stringListToString(validationErrors, "\n", false));
         }
         else{
             aq.id(R.id.validation).text("");
-            mCustomer.signUpInBackground(new SignUpCallback() {
+            parseUser.signUpInBackground(new SignUpCallback() {
                 @Override
                 public void done(ParseException e) {
-                    if(e!=null){
+                    if (e != null) {
                         new AlertDialog.Builder(getActivity()).setMessage(e.getMessage()).setPositiveButton(R.string.ok, null).show();
-                    }
-                    else{
-                        Session.getInstance().setCustomerHeader(mCustomer, mPassword1);
+                    } else {
+                        if (ConnectedApp.DEBUG)
+                            Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
+                        Session.getInstance().setCustomerHeader(parseUser, mCustomer.password);
                     }
                 }
             });
@@ -144,13 +162,13 @@ public class SignupFragment extends BaseIonFragment {
 
     private void modelToUI(){
 
-        aq.id(R.id.edit_email_prefix).text(mEmailPrefix).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        aq.id(R.id.edit_email_prefix).text(mCustomer.emailPrefix).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) mEmailPrefix=((EditText) v).getText().toString().trim();
+                if(!hasFocus) mCustomer.emailPrefix=((EditText) v).getText().toString().trim();
             }
         });
-        //security questions
+
         List<String> domains = Func.distinct(FuncEx.selectMany(mHospitalAvails, new Function<ParseObject, Collection<String>>() {
             @Override
             public Collection<String> apply(ParseObject parseObject) {
@@ -160,11 +178,11 @@ public class SignupFragment extends BaseIonFragment {
         ArrayAdapter<String> questionsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, domains);
         questionsAdapter.setDropDownViewResource(android.support.v7.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
-        aq.id(R.id.spinner_email_domain).adapter(questionsAdapter).setSelection(domains.indexOf(mEmailSuffix))
+        aq.id(R.id.spinner_email_domain).adapter(questionsAdapter).setSelection(domains.indexOf(mCustomer.emailSuffix))
                 .itemSelected(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        mEmailSuffix = (String) parent.getItemAtPosition(position);
+                        mCustomer.emailSuffix = (String) parent.getItemAtPosition(position);
                     }
 
                     @Override
@@ -172,19 +190,27 @@ public class SignupFragment extends BaseIonFragment {
 
                     }
                 });
+
+        aq.id(R.id.edit_surname).text(mCustomer.lastName).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus)
+                    mCustomer.lastName = ((EditText) v).getText().toString().trim();
+            }
+        });
+        aq.id(R.id.edit_firstname).text(mCustomer.firstName).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) mCustomer.firstName= ((EditText) v).getText().toString().trim();
+            }
+        });
+        aq.id(R.id.edit_password).text(mCustomer.password).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) mCustomer.password= ((EditText) v).getText().toString().trim();
+            }
+        });
         /*
-        aq.id(R.id.customer_surname).text(mCustomer.Surname).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) mCustomer.Surname=((EditText) v).getText().toString().trim();
-            }
-        });
-        aq.id(R.id.customer_username).text(mCustomer.Username).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) mCustomer.Username=((EditText) v).getText().toString().trim();
-            }
-        });
         aq.id(R.id.customer_email).text(mCustomer.Email).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -225,8 +251,6 @@ public class SignupFragment extends BaseIonFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(ARG_CUSTOMER, ParseUtils.getGson().toJson(mCustomer));
-        outState.putString(ARG_PASSWORD_1, mPassword1);
-        outState.putString(ARG_PASSWORD_2, mPassword2);
+        outState.putSerializable(ARG_CUSTOMER, mCustomer);
     }
 }

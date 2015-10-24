@@ -304,15 +304,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 		}
 
 		int backStackID = fragmentTransaction.commit();
-		if(ConnectedApp.GTM_ENABLED) pushFragmentTransactionToGTM(fragment, tag);
 
 		return backStackID;
 	}
-	protected void pushFragmentTransactionToGTM(Fragment fragment, String tag){
-		//TagManagerUtil.DataLayerValuesBuilder builder = new TagManagerUtil.DataLayerValuesBuilder();
-		//builder.addScreenName(this, fragment);
-		//TagManagerUtil.pushEvent(TagManagerUtil.EVENT_ONLOAD_SCREENVIEW, builder.getMap());
-	}
+
 	public void clearTop(){
 		FragmentManager fm = getSupportFragmentManager();
 		if(fm.getBackStackEntryCount()>0) try{
@@ -517,12 +512,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 	}
 	
 	
-	
-	public boolean isXLarge(){
-		return ((ConnectedApp)getApplication()).isXLarge();
-		
-	}
-	
+
 	/**
 	 * 
 	 * @return Configuration.ORIENTATION_SQUARE, portrait or landscape

@@ -27,8 +27,8 @@ public class CustomerHelper {
         Resources r = ConnectedApp.getContextStatic().getResources();
         List<String> results = new ArrayList<>();
         if(StringUtils.isNullOrEmpty(c.getUsername()) || StringUtils.isNullOrEmpty(c.getEmail())) results.add(r.getString(R.string.email_error));
-
-        if(!ValidatorUtil.email(c.getEmail())) results.add(r.getString(R.string.email_error));
+        if(StringUtils.isAnyNullOrEmpty(c.getString("firstName"), c.getString("lastName"))) results.add("Your name is required");
+        //if(StringUtils.isNullOrEmpty(c.getEmail())) results.add(r.getString(R.string.email_error));
 
         return results;
     }

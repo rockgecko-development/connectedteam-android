@@ -46,6 +46,7 @@ dependencies {
     compile 'com.parse.bolts:bolts-android:1.2.1'
     compile 'com.parse:parse-android:1.10.3'
     compile 'net.servicestack:android:1.0.13'
+    compile 'com.github.greenfrvr:hashtag-view:1.2.0'
     compile files('libs/proguard-annotations.jar')
 
 }
