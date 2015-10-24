@@ -383,49 +383,7 @@ public class Session extends Observable{
 	}
 
 	private void executeAutoLogin(String email, String password) {
-		isExecutingAutologin=true;
-		getIonHelper().doPost(getIonHelper().getIon().build(ConnectedApp.getContextStatic()),
-				new dto.Authenticate().setUserName(email).setPassword(password))
-				.go().setCallback(new FutureCallback<Response<dto.AuthenticateResponse>>() {
-					@Override
-					public void onCompleted(Exception e, Response<dto.AuthenticateResponse> result) {
 
-						//&& !StringUtils.isNullOrEmpty(result.getResult().getUserId()
-						if (result != null && result.getResult() != null ) {
-							/*
-							getIonHelper().doGet(getIonHelper().getIon().build(ConnectedApp.getContextStatic()), new dto.GetCustomerHeader())
-									.go().setCallback(new FutureCallback<Response<dto.CustomerHeader>>() {
-										@Override
-										public void onCompleted(Exception e, Response<dto.CustomerHeader> result) {
-											//if(result==null)result=new Response<>(null, null, null, e, null);
-											isExecutingAutologin = false;
-											if (shouldCancelAutologinRequest) {
-												shouldCancelAutologinRequest = false;
-											}
-											else if (result.getHeaders().code()<400 && result.getResult() != null) {
-												setCustomerHeader(result.getResult());
-											}
-											else{
-												ConnectedApp.getErrorReporter().onApiErrorShowToast(result);
-												setChanged(WhatChanged.RE_AUTH_FAIL);
-											}
-
-										}
-									}); */
-						} else {
-							isExecutingAutologin = false;
-							if (result != null && result.getResult() != null && result.getResult().getResponseStatus() != null) {
-								Toast.makeText(ConnectedApp.getContextStatic(), result.getResult().getResponseStatus().getMessage(), Toast.LENGTH_SHORT).show();
-								clearAutoLogin();
-							}
-							else{
-								ConnectedApp.getErrorReporter().onApiErrorShowToast(result);
-								setChanged(WhatChanged.RE_AUTH_FAIL);
-							}
-
-						}
-					}
-				});
 	}
 	private long lastUserHeaderUpdateTime;
 	private boolean isExecutingUserHeader;
@@ -459,14 +417,7 @@ public class Session extends Observable{
 
 	public void executeLogout(){
 		clearLogin();
-		getIonHelper().getIon().build(ConnectedApp.getContextStatic())
-				.load(ConnectedApp.getWebserviceUrl()+"/auth/logout")
-				.asString().setCallback(new FutureCallback<String>() {
-			@Override
-			public void onCompleted(Exception e, String result) {
-				if(ConnectedApp.DEBUG) Log.d("responseDump", result);
-			}
-		});
+
 	}
 
 }

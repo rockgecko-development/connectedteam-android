@@ -6,6 +6,7 @@ package au.com.connectedteam.util;
 public class IntentUtil {
 
     public static final String ARG_FROM_ACTIVITY_CLASS = "connectedteam.fromActivityClass";
+    public static final String ARG_NEXT_ACTIVITY_CLASS = "connectedteam.nextActivityClass";
     public static final String ARG_CONTEST_ID = "connectedteam.contestID";
     public static final String ARG_CONTEST = "connectedteam.contest";
     public static final String ARG_CONTEST_ENTRY_ID = "connectedteam.contestEntryID";

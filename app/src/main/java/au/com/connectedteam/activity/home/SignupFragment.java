@@ -1,5 +1,6 @@
 package au.com.connectedteam.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -152,6 +153,9 @@ public class SignupFragment extends BaseIonFragment {
                         if (ConnectedApp.DEBUG)
                             Toast.makeText(getActivity(), "Signup success", Toast.LENGTH_SHORT).show();
                         Session.getInstance().setCustomerHeader(parseUser, mCustomer.password);
+//                        Intent intent = new Intent(getActivity(), PreferencesActivity.class);
+//                        startActivity(intent);
+//                        getActivity().finish();
                     }
                 }
             });

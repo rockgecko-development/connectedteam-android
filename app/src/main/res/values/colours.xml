@@ -58,6 +58,9 @@
 
     <color name="divider_faint">#eeeeee</color>
 
+    <color name="tag_text_colour">#272F32</color>
+    <color name="settings_shadow">#aa272F32</color>
+
     <color name="card_background">#eeeeee</color>
     <color name="card_primary_cell_bg">#ffffffff</color>
     <color name="card_activated_colour">@color/eqpay_color</color>

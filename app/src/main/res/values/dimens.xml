@@ -72,7 +72,8 @@
 
     <dimen name="bottom_action_button_height">60dp</dimen>
 
-
+    <dimen name="tag_padding_horizontal">6dp</dimen>
+    <dimen name="tag_padding_vertical">8dp</dimen>
 
 
 

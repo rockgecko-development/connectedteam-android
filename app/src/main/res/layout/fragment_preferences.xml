@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/card_background"
+    android:paddingTop="@dimen/margin_top"
+
+    android:paddingBottom="@dimen/margin_bottom">
+
+    <TextView
+        style="@style/SeparatorText"
+        android:text="Your Hospitals"/>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/settings_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_edit_hospitals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ActionButtonStyle"
+            android:text="Add"/>
+        <TextView
+            android:id="@+id/tv_hospitals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="hospitals"/>
+        <com.greenfrvr.hashtagview.HashtagView
+            android:id="@+id/hashtag_hospitals"
+            style="@style/HashtagView"
+            app:rowGravity="left"
+            app:tagBackground="@drawable/tag_hospital"
+            app:tagPaddingBottom="@dimen/tag_padding_vertical"
+            app:tagPaddingLeft="@dimen/tag_padding_horizontal"
+            app:tagPaddingRight="@dimen/tag_padding_horizontal"
+            app:tagPaddingTop="@dimen/tag_padding_vertical"
+            app:tagTextColor="@color/tag_text_colour"/>
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="validation"
+        android:padding="5dp"
+        android:id="@+id/validation"/>
+
+    <Button
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit"
+        android:textColor="@drawable/textcolour_button_white"
+
+        android:background="@drawable/button_action_solid"/>
+
+</LinearLayout>

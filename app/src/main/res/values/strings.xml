@@ -22,6 +22,7 @@
     <string name="home_copyright">"%s ConnectED"</string>
 
     <string name="activity_feed">"Feed"</string>
+    <string name="activity_preferences">"Preferences"</string>
 
 
     <string name="requesting">Loading&#x2026;</string>

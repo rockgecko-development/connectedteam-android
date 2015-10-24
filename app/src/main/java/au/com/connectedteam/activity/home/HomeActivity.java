@@ -1,11 +1,14 @@
 package au.com.connectedteam.activity.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseActivity;
+import au.com.connectedteam.activity.feed.FeedActivity;
 import au.com.connectedteam.application.Session;
+import au.com.connectedteam.util.IntentUtil;
 
 /**
  * Created by bramleyt on 17/07/2015.
@@ -62,12 +65,15 @@ public class HomeActivity extends BaseActivity {
                 //finish();
             }else {
                 //TODO
-                /*
-                Intent intent = new Intent(this, LobbyActivity.class);
+
+                Intent intent = new Intent(this, FeedActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if(getMainFragment() instanceof SignupFragment){
+                    intent.putExtra(IntentUtil.ARG_NEXT_ACTIVITY_CLASS, PreferencesActivity.class.getName());
+                }
                 startActivity(intent);
                 finish();
-                */
+
             }
         }
     }
