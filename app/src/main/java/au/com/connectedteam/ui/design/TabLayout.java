@@ -877,7 +877,7 @@ public class TabLayout extends HorizontalScrollView {
             }
 
         }
-        static final int DEFAULT_TEXT_LAYOUT_RES = layout.layout_tab_text;
+        static final int DEFAULT_TEXT_LAYOUT_RES = layout.design_layout_tab_text;
        // static final int DEFAULT_TEXT_LAYOUT_RES = R.layout.viewpager_radiobutton;
 
         final void update() {
@@ -917,7 +917,7 @@ public class TabLayout extends HorizontalScrollView {
 
             if(this.mCustomView == null) {
                 if(this.mIconView == null) {
-                    ImageView textView1 = (ImageView)LayoutInflater.from(this.getContext()).inflate(layout.layout_tab_icon, this, false);
+                    ImageView textView1 = (ImageView)LayoutInflater.from(this.getContext()).inflate(layout.design_layout_tab_icon, this, false);
                     this.addView(textView1, 0);
                     this.mIconView = textView1;
                 }

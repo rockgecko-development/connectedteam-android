@@ -2,18 +2,15 @@ package au.com.connectedteam.config;
 
 import android.content.Context;
 
-import java.util.Locale;
-
 import au.com.connectedteam.R;
 import au.com.connectedteam.application.ConnectedApp;
-import au.com.connectedteam.util.StringUtils;
 import proguard.annotation.KeepClassMembers;
 
 /**
  * Created by bramleyt on 23/01/2015.
  */
 @KeepClassMembers
-public class EQPayAppLocaleBuilder implements IAppLocaleBuilder{
+public class ConnectedAppLocaleBuilder implements IAppLocaleBuilder{
 
 
 
@@ -30,7 +27,7 @@ public class EQPayAppLocaleBuilder implements IAppLocaleBuilder{
 
     private Context mContext;
 
-    public EQPayAppLocaleBuilder(Context c, String countryCode){
+    public ConnectedAppLocaleBuilder(Context c, String countryCode){
         this.mContext=c;
         //only USA for now
         mCountryCode ="US";
@@ -70,14 +67,14 @@ public class EQPayAppLocaleBuilder implements IAppLocaleBuilder{
     }
 
     @Override
-    public EQPayAppLocaleBuilder withDevWebserviceUrl(String url) {
+    public ConnectedAppLocaleBuilder withDevWebserviceUrl(String url) {
         if(ConnectedApp.DEBUG) {
             this.webserviceUrl = url;
         }
         return this;
     }
     @Override
-    public EQPayAppLocaleBuilder withName(String name) {
+    public ConnectedAppLocaleBuilder withName(String name) {
         this.name = name;
         return this;
     }

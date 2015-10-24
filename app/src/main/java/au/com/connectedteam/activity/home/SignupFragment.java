@@ -1,38 +1,56 @@
 package au.com.connectedteam.activity.home;
 
-import android.app.AlertDialog;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 import com.androidquery.AQuery;
 import com.koushikdutta.ion.Response;
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
+import net.servicestack.func.Func;
+import net.servicestack.func.Function;
+import net.servicestack.func.Predicate;
+
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseIonFragment;
 import au.com.connectedteam.application.ConnectedApp;
+import au.com.connectedteam.application.Session;
 import au.com.connectedteam.appsapi.ex.ResponseBaseHelper;
 import au.com.connectedteam.appsapi.ex.CustomerHelper;
 import au.com.connectedteam.appsapi.generated.dto;
+import au.com.connectedteam.util.FuncEx;
+import au.com.connectedteam.util.ParseUtils;
 import au.com.connectedteam.util.StringUtils;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by bramleyt on 20/07/2015.
  */
-public class PartialSignupFragment extends BaseIonFragment {
+public class SignupFragment extends BaseIonFragment {
 
-    public static final String TAG = "PartialSignupFragment";
-    public static final String ARG_REFERRAL_CODE = "referralCode";
+    public static final String TAG = "SignupFragment";
     public static final String ARG_CUSTOMER = "customer";
     public static final String ARG_PASSWORD_1 = "password1";
     public static final String ARG_PASSWORD_2 = "password2";
     public static final String ARG_PROMO_CODE = "promoCode";
 
-    private dto.User mCustomer;
-    private String mPassword1, mPassword2, mPromoCode;
-
+    private ParseUser mCustomer;
+    private String mPassword1, mPassword2, mEmailPrefix, mEmailSuffix;
+    private List<ParseObject> mHospitalAvails;
 
     AQuery aq;
 
@@ -41,44 +59,64 @@ public class PartialSignupFragment extends BaseIonFragment {
         super.onCreate(savedInstanceState);
 
         if(savedInstanceState!=null){
-            mCustomer = (dto.User) savedInstanceState.getSerializable(ARG_CUSTOMER);
+            String userJson= savedInstanceState.getString(ARG_CUSTOMER);
+            mCustomer = ParseUtils.getGson().fromJson(userJson, ParseUser.class);
             mPassword1 = savedInstanceState.getString(ARG_PASSWORD_1);
             mPassword2 = savedInstanceState.getString(ARG_PASSWORD_2);
-            mPromoCode = savedInstanceState.getString(ARG_PROMO_CODE);
         }
-        if(mCustomer==null)mCustomer=new dto.User();
+        if(mCustomer==null)mCustomer=new ParseUser();
+
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = null;// inflater.inflate(R.layout.fragment_partialsignup, container, false);
+        View view =  inflater.inflate(R.layout.fragment_signup_1, container, false);
         aq = new AQuery(view);
-        aq.id(R.id.signup_button).clicked(new View.OnClickListener() {
+        aq.id(R.id.btn_submit).clicked(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearFocusAndSubmit();
             }
         });
+
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        modelToUI();
+        fetchInitialData();
+        modelToUIIfReady();
+
+    }
+    private void fetchInitialData(){
+        if(mHospitalAvails==null){
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("HospitalAvail");
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    mHospitalAvails=objects;
+                    modelToUIIfReady();
+                }
+            });
+        }
+    }
+
+    private void modelToUIIfReady(){
+        if(mHospitalAvails!=null) modelToUI();
     }
 
     @Override
     protected void onRequestingChanged() {
         super.onRequestingChanged();
-        aq.id(R.id.signup_button).enabled(!isRequesting());
+        aq.id(R.id.btn_submit).enabled(!isRequesting());
     }
 
     private void clearFocusAndSubmit() {
         View focussedView = getView().findFocus();
         if (focussedView != null) focussedView.clearFocus();
-        List<String> validationErrors = CustomerHelper.validate(mCustomer, true);
+        List<String> validationErrors = CustomerHelper.validate(mCustomer);
         boolean passwordsOK = !StringUtils.isAnyNullOrEmpty(mPassword1, mPassword2) && mPassword1.equals(mPassword2) && mPassword1.length()>0;
         if(!passwordsOK) validationErrors.add("Passwords do not match");
         else if (mPassword2.length()<CustomerHelper.MIN_PASSWORD_LENGTH)
@@ -88,45 +126,53 @@ public class PartialSignupFragment extends BaseIonFragment {
         }
         else{
             aq.id(R.id.validation).text("");
-            dto.Signup req = new dto.Signup().setUser(mCustomer);
-
-            executePartialSignup(req);
+            mCustomer.signUpInBackground(new SignUpCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if(e!=null){
+                        new AlertDialog.Builder(getActivity()).setMessage(e.getMessage()).setPositiveButton(R.string.ok, null).show();
+                    }
+                    else{
+                        Session.getInstance().setCustomerHeader(mCustomer, mPassword1);
+                    }
+                }
+            });
 
         }
     }
-    private void executePartialSignup(final dto.Signup req){
-        getIonHelper().doPost(getIonLoadBuilder(), req).go().setCallback(new BaseFragmentIonCallback<dto.ResponseBase>() {
-            @Override
-            public void onSuccess(dto.ResponseBase result) {
-                if(result.getErrorInfo().getErrorNo()>0){
-                    aq.id(R.id.validation).text(ResponseBaseHelper.formatMessage(result));
-                }
-                else{
-                 /*   getIonHelper().doGet(getIonLoadBuilder(), new dto.GetCustomerHeader()).go().setCallback(new BaseFragmentIonCallback<dto.CustomerHeader>() {
-                        @Override
-                        public void onSuccess(dto.CustomerHeader result) {
-                            Session.getInstance().setCustomerHeader(result, req.getPassword());
-                            Toast.makeText(getActivity(), "Balance: $" + result.PrimaryBalance + " VIP: " + result.IsVIP, Toast.LENGTH_LONG).show();
-                        }
-                    });*/
-                }
-            }
-            public void onError(Response<dto.ResponseBase> response) {
-                new AlertDialog.Builder(getActivity()).setMessage(ConnectedApp.getErrorReporter().onApiErrorGetMessage(response)).setPositiveButton(R.string.ok, null).show();
 
-            }
-        });
-        onRequestingChanged();
-    }
 
     private void modelToUI(){
-        /*
-        aq.id(R.id.customer_firstname).text(mCustomer.FirstName).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+        aq.id(R.id.edit_email_prefix).text(mEmailPrefix).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) mCustomer.FirstName=((EditText) v).getText().toString().trim();
+                if(!hasFocus) mEmailPrefix=((EditText) v).getText().toString().trim();
             }
         });
+        //security questions
+        List<String> domains = Func.distinct(FuncEx.selectMany(mHospitalAvails, new Function<ParseObject, Collection<String>>() {
+            @Override
+            public Collection<String> apply(ParseObject parseObject) {
+                return parseObject.getList("allowedEmails");
+            }
+        }));
+        ArrayAdapter<String> questionsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, domains);
+        questionsAdapter.setDropDownViewResource(android.support.v7.appcompat.R.layout.support_simple_spinner_dropdown_item);
+
+        aq.id(R.id.spinner_email_domain).adapter(questionsAdapter).setSelection(domains.indexOf(mEmailSuffix))
+                .itemSelected(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mEmailSuffix = (String) parent.getItemAtPosition(position);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+        /*
         aq.id(R.id.customer_surname).text(mCustomer.Surname).getView().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -179,9 +225,8 @@ public class PartialSignupFragment extends BaseIonFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putSerializable(ARG_CUSTOMER, mCustomer);
+        outState.putString(ARG_CUSTOMER, ParseUtils.getGson().toJson(mCustomer));
         outState.putString(ARG_PASSWORD_1, mPassword1);
         outState.putString(ARG_PASSWORD_2, mPassword2);
-        outState.putString(ARG_PROMO_CODE, mPromoCode);
     }
 }

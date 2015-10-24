@@ -15,16 +15,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
     <EditText
-        android:id="@+id/login_email"
+        android:id="@+id/edit_email_prefix"
         android:hint="@string/email_hint"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:drawablePadding="10dp"
         android:inputType="textEmailAddress"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content" />
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\@"/>
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_email_domain"></Spinner>
+</LinearLayout>
     <EditText
         android:id="@+id/login_password"
         android:hint="password"
@@ -45,10 +60,10 @@
     <Button
         android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
-        android:id="@+id/login_button"
+        android:id="@+id/btn_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_button"
+        android:text="@string/submit"
         android:textColor="@drawable/textcolour_button_white"
 
         android:background="@drawable/button_action_solid"/>

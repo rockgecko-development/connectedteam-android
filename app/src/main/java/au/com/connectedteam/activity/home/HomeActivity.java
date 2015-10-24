@@ -1,16 +1,11 @@
 package au.com.connectedteam.activity.home;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.provider.Telephony;
 import android.view.Window;
 
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseActivity;
-import au.com.connectedteam.application.ConnectedApp;
 import au.com.connectedteam.application.Session;
-import au.com.connectedteam.util.IntentUtil;
 
 /**
  * Created by bramleyt on 17/07/2015.
@@ -86,7 +81,7 @@ public class HomeActivity extends BaseActivity {
         transactTo(0, fragment, LoginFragment.TAG);
     }
     public void navigateSignup(){
-        PartialSignupFragment fragment = new PartialSignupFragment();
-        transactTo(0, fragment, PartialSignupFragment.TAG);
+        SignupFragment fragment = new SignupFragment();
+        transactTo(0, fragment, SignupFragment.TAG);
     }
 }

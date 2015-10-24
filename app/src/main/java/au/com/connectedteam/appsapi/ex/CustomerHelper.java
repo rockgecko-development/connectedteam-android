@@ -3,6 +3,7 @@ package au.com.connectedteam.appsapi.ex;
 import android.content.res.Resources;
 
 
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -22,28 +23,17 @@ public class CustomerHelper {
     public static final int MIN_AGE_FOR_SIGNUP = 18;
     public static final int MIN_PASSWORD_LENGTH = 6;
 
-    public static List<String> validate(dto.User c, boolean isPartialSignup){
+    public static List<String> validate(ParseUser c){
         Resources r = ConnectedApp.getContextStatic().getResources();
         List<String> results = new ArrayList<>();
-        if(StringUtils.isNullOrEmpty(c.getFirstName())) results.add("First name is required");
-        if(StringUtils.isNullOrEmpty(c.getSurname())) results.add("Last name is required");
-        if(StringUtils.isNullOrEmpty(c.getUserNameDisplay())) results.add(r.getString(R.string.username_error));
-        if(!ValidatorUtil.email(c.getEmail())) results.add(r.getString(R.string.email_error));
-        if(!isPartialSignup){
-            //DOB etc
-            Calendar cal = Calendar.getInstance();
-            cal.add(Calendar.YEAR, -MIN_AGE_FOR_SIGNUP);
-            if(c.getDateOfBirth()==null || c.getDateOfBirth().after(cal.getTime())) results.add(r.getString(R.string.validation_min_age_for_signup));
-            if(StringUtils.isNullOrEmpty(c.getResidentialAddress1())) results.add("Residential address cannot be empty");
-            if(StringUtils.isNullOrEmpty(c.getResidentialCountryCode())) results.add("Country is required");
+        if(StringUtils.isNullOrEmpty(c.getUsername()) || StringUtils.isNullOrEmpty(c.getEmail())) results.add(r.getString(R.string.email_error));
 
-        }
+        if(!ValidatorUtil.email(c.getEmail())) results.add(r.getString(R.string.email_error));
+
         return results;
     }
 
-    public static boolean isProfileComplete(dto.User c){
-        return c.getResidentialCountryCode()!=null && c.getResidentialAddress1()!=null && c.getDateOfBirth()!=null;
-    }
+
 
 
 }

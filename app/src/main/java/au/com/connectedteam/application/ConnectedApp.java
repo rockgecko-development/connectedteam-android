@@ -13,6 +13,10 @@ import android.os.Build;
 import android.text.format.DateUtils;
 import android.util.DisplayMetrics;
 
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseUser;
+
 import au.com.connectedteam.BuildConfig;
 import au.com.connectedteam.R;
 import au.com.connectedteam.config.AppConfig;
@@ -28,7 +32,6 @@ import net.servicestack.client.LogProvider;
 public class ConnectedApp extends Application{
 
 	public static final boolean DEBUG = true;
-	public static final boolean GTM_ENABLED = false;
 	public static final boolean APPVERSION_CHECK_ENABLED = false;
 
 	
@@ -38,21 +41,28 @@ public class ConnectedApp extends Application{
 	public static final long MAX_SESSION_RESTORE_AGE = DateUtils.DAY_IN_MILLIS;
 
 	private ErrorReporter mErrorReporter;
-	/**
-	 * app mocks:
-	 * https://projects.invisionapp.com/share/ER2ZRWE7S#/screens
-	 */
-	
+
 	 @Override
 	public void onCreate() {
 		 super.onCreate();
 		 instance=this;
 		 doAppUpdates();
 		 mErrorReporter = new ErrorReporter(this);
-		 net.servicestack.client.Log.setInstance(new LogProvider("SS", DEBUG));
+
+		 // Enable Local Datastore.
+		 Parse.enableLocalDatastore(this);
+
+		 // Add your initialization code here
+		 Parse.initialize(this, "cQNlWSgRjjiNioxGv0fLFFu8ALg4AYvs1i8tqyi9", "2CQOSvltI0j6nrlw3b7l9m3Q6f03DODGsh60qjiv");
+
+		// ParseACL defaultACL = new ParseACL();
+		 // Optionally enable public read access.
+		 // defaultACL.setPublicReadAccess(true);
+		// ParseACL.setDefaultACL(defaultACL, true);
 
 		 Session.Instantiate(getApplicationContext());
 //
+
 
 	 }
 
@@ -60,24 +70,7 @@ public class ConnectedApp extends Application{
 		return instance.mErrorReporter;
 	}
 	 
-	 public boolean isXLarge(){
-	    	//return false;
-	    	//BoxTabsWithBetSelector uses API9+
-	    	//SCREENLAYOUT_SIZE_XLARGE is only in 9+ anyway
-	    	//TwitterRequestInterceptor requires API9+
-	    	if(Build.VERSION.SDK_INT<9) return false;
-	    	
-	    	if( ((getResources().getConfiguration().screenLayout & 
-				    Configuration.SCREENLAYOUT_SIZE_MASK) == 
-				        Configuration.SCREENLAYOUT_SIZE_XLARGE)) return true;
-	    	DisplayMetrics dm = getResources().getDisplayMetrics(); //was 595dp
-	    	int width = Math.max(dm.widthPixels, dm.heightPixels);
-	    	int height = Math.min(dm.widthPixels, dm.heightPixels);
-	    	//in landscape:
-			int minWidth = UIUtil.scaleLayoutParam(660);
-			int minHeight = UIUtil.scaleLayoutParam(520);
-			return width>=minWidth && height>=minHeight;
-	    }
+
 	 
 	 public static Context getContextStatic(){
 	    	return instance.getApplicationContext();

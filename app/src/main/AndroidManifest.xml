@@ -35,6 +35,11 @@
             >
         </activity>
 
+        <activity android:name="au.com.connectedteam.activity.feed.FeedActivity"
+            android:label="@string/activity_feed"
+            android:theme="@style/AppTheme"
+            >
+        </activity>
         <meta-data android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 

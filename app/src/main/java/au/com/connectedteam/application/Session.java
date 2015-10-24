@@ -19,6 +19,9 @@ import com.koushikdutta.async.future.Future;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
 import com.koushikdutta.ion.builder.Builders;
+import com.parse.Parse;
+import com.parse.ParseUser;
+
 import au.com.connectedteam.appsapi.generated.dto;
 import au.com.connectedteam.config.AppConfig;
 import au.com.connectedteam.models.AppVersion;
@@ -250,19 +253,20 @@ public class Session extends Observable{
 	public UserHeader getCustomerHeader(){
 		return mCustomerHeader;
 	}
-	public void setCustomerHeader(UserHeader customerData, String password){
-		mCustomerHeader =customerData;
-		mEmail=customerData.userName.getEmail();
-		mPassword=password;
+	public void setCustomerHeader(ParseUser customerData, String password){
+		if(ParseUser.getCurrentUser()==customerData) {
+			mEmail = customerData.getEmail();
+			mPassword = password;
 
-		SharedPreferences settings = ConnectedApp.getContextStatic().getSharedPreferences(AppConfig.PREFS_FILE_USERPREFS, Context.MODE_PRIVATE);
-		Editor e = settings.edit();
-		e.putString(AppConfig.LOGIN_REMEMBERME_EMAIL, mEmail);
-		e.putString(AppConfig.LOGIN_REMEMBERME_PASSWORD, mPassword);
-		e.putInt(AppConfig.LOGIN_REMEMBERME_CUSTOMER_ID, customerData.sessionInfo.getUserId());
-		e.commit();
+			SharedPreferences settings = ConnectedApp.getContextStatic().getSharedPreferences(AppConfig.PREFS_FILE_USERPREFS, Context.MODE_PRIVATE);
+			Editor e = settings.edit();
+			e.putString(AppConfig.LOGIN_REMEMBERME_EMAIL, mEmail);
+			e.putString(AppConfig.LOGIN_REMEMBERME_PASSWORD, mPassword);
+			//e.putInt(AppConfig.LOGIN_REMEMBERME_CUSTOMER_ID, customerData.getObjectId());
+			e.commit();
 
-		setChanged(WhatChanged.LOG_IN_OUT);
+			setChanged(WhatChanged.LOG_IN_OUT);
+		}
 	}
 	public void setCustomerHeader(UserHeader customerData){
 		if(customerData!= mCustomerHeader) {
@@ -281,12 +285,10 @@ public class Session extends Observable{
 		}
 	}
 	public boolean isLoggedIn() {
-		return mCustomerHeader !=null;
+		return ParseUser.getCurrentUser() !=null;
 	}
 
-	public int getCustomerID(){
-		return mCustomerHeader!=null?mCustomerHeader.sessionInfo.getUserId():0;
-	}
+
 	void clearAll(){
 		clearLogin();
 		//mLobbySession=new LobbySession();

@@ -4,11 +4,10 @@ package au.com.connectedteam.config;
  * Created by bramleyt on 18/06/2015.
  */
 public class AppConfig {
-    public static final String PREFS_FILE_APPPREFS = "EQPayAppPrefs";
+    public static final String PREFS_FILE_APPPREFS = "ConnectedAppPrefs";
     public static final String APP_LAST_VERSION_CODE = "application.lastVersionCode";
 
-    public static final String PREFS_FILE_USERPREFS = "WebjetUserPrefs";
-    public static final String PREFS_FILE_FAVOURITEHOTELS = "FavouriteHotels";
+    public static final String PREFS_FILE_USERPREFS = "ConnectedUserPrefs";
 
     public static final String LOGIN_REMEMBERME_EMAIL = "login.email";
     public static final String LOGIN_REMEMBERME_PASSWORD = "login.password";

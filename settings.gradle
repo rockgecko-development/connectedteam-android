@@ -1,2 +1,2 @@
-include ':segmentedControl', ':AndroidAsync', ':ion'
+include ':segmentedControl', ':AndroidAsync', ':ion', ':ParseUI-Widget'
 include ':app'
