@@ -77,23 +77,33 @@ public class PreferencesFragment extends BaseFragment{
         fetchInitialData();
         modelToUIIfReady();
     }
+    protected void onRequestingChanged(){
+        if(getBaseActivity()!=null) getBaseActivity().notifyRefreshing(PreferencesFragment.this, isRequesting());
+    }
     private void fetchInitialData(){
         if(mHospitalAvails==null){
+            requestingCount++;
+            onRequestingChanged();
             ParseQuery<ParseObject> query = ParseQuery.getQuery("HospitalAvail");
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
                     mHospitalAvails=objects;
+                    requestingCount--;
+                    onRequestingChanged();
                     modelToUIIfReady();
                 }
             });
         }
         if(mTagAvails==null){
+            requestingCount++;
             ParseQuery<ParseObject> query = ParseQuery.getQuery("TagAvail");
             query.findInBackground(new FindCallback<ParseObject>() {
                 @Override
                 public void done(List<ParseObject> objects, ParseException e) {
                     mTagAvails = objects;
+                    requestingCount--;
+                    onRequestingChanged();
                     modelToUIIfReady();
                 }
             });
@@ -249,9 +259,10 @@ public class PreferencesFragment extends BaseFragment{
         if(focussed!=null) focussed.clearFocus();
         getActivity().finish();
     }
+    private int requestingCount;
     @Override
     public boolean isRequesting() {
-        return false;
+        return requestingCount>0;
     }
 
     @Override

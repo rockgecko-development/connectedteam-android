@@ -17,6 +17,10 @@ import com.androidquery.AQuery;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 import com.koushikdutta.ion.Response;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseFragment;
 import au.com.connectedteam.activity.BaseIonFragment;
@@ -101,7 +105,11 @@ public class LoginFragment extends BaseIonFragment {
         aq.id(R.id.validation).text(lastValidation);
 
     }
-
+private int requestingCount;
+    @Override
+    public boolean isRequesting() {
+        return requestingCount>0;
+    }
 
     private void doLogin(final String email, final String password){
         if(email.length()<MIN_USERNAME_PASSWORD_LENGTH || password.length()<MIN_USERNAME_PASSWORD_LENGTH){
@@ -109,32 +117,20 @@ public class LoginFragment extends BaseIonFragment {
             return;
         }
         setLastValidation("");
-        final IonHelper helper = getIonHelper();
-        helper.doPost(getIonLoadBuilder(), new dto.Authenticate().setUserName(email).setPassword(password))
-                .go().then(new FutureCallback<Response<dto.AuthenticateResponse>>() {
+        requestingCount=1;
+        ParseUser.logInInBackground(email, password, new LogInCallback() {
             @Override
-            public void onCompleted(Exception e, Response<dto.AuthenticateResponse> result) {
-                if (result.getResult() != null && !StringUtils.isNullOrEmpty(result.getResult().getUserId())) {
-                    /*
-                    helper.doGet(LoginFragment.this, new dto.GetCustomerHeader()).go().then(new BaseIonCallback<dto.CustomerHeader>() {
-                        @Override
-                        public void onSuccess(dto.CustomerHeader result) {
-                            //          getBaseActivity().notifyRefreshing(LoginFragment.this, isRequesting());
-                            Session.getInstance().setCustomerHeader(result, password);
-
-                        }
-                    });*/
-                } else {
-
-                    if (result.getResult() != null && result.getResult().getResponseStatus() != null) {
-                        setLastValidation(result.getResult().getResponseStatus().getMessage());
-                    } else
-                        setLastValidation(ConnectedApp.getErrorReporter().onApiErrorGetMessage(result));
+            public void done(ParseUser user, ParseException e) {
+                requestingCount=0;
+                onRequestingChanged();
+                if(e!=null){
+                    setLastValidation(e.getMessage());
+                }
+                else{
+                    Session.getInstance().setCustomerHeader(user, password);
                 }
             }
-
         });
-        //getBaseActivity().notifyRefreshing(this, isRequesting());
     }
 
     String cookie;

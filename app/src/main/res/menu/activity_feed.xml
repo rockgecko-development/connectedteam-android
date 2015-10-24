@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" >
+    <item android:id="@+id/menu_filter" android:orderInCategory="99" android:title="Filter" android:icon="@drawable/menu_filter" app:showAsAction="always"/>
+    <item android:id="@+id/menu_add" android:orderInCategory="98" android:title="Add" android:icon="@drawable/ic_menu_plus" app:showAsAction="always"/>
+
     <item android:id="@+id/menu_preferences" android:title="Preferences" />
     <item android:id="@+id/menu_app_settings" android:title="App Settings" />
+    <item android:id="@+id/menu_logout" android:title="@string/menu_logout" />
 
 
 

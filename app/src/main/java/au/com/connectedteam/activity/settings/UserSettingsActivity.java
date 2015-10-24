@@ -264,7 +264,7 @@ public class UserSettingsActivity extends PreferenceActivity implements OnPrefer
 				+"\nRegion: " +appLocale.getCultureName()
 				+"\n----------\n";
 		}
-		summary += String.format("v:%s %s\n%s\nDeveloped By Stride Solutions\nRelease Notes:\n%s",
+		summary += String.format("v:%s %s\n%s\nDeveloped By ConnectedTeam\nRelease Notes:\n%s",
 				versionStr, 
 				getString(R.string.app_version_date),
 				getString(R.string.home_copyright, StringUtils.formatDate(new Date(), "yyyy")),

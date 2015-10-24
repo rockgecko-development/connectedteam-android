@@ -416,8 +416,8 @@ public class Session extends Observable{
 	}
 
 	public void executeLogout(){
+		ParseUser.logOutInBackground();
 		clearLogin();
-
 	}
 
 }

@@ -32,9 +32,9 @@
             >
             <intent
               	android:targetPackage="@string/app_package"
-            	android:targetClass="au.com.eqpay.activity.GenericDetailActivity"
+            	android:targetClass="au.com.connectedteam.activity.GenericDetailActivity"
             >
-            <extra android:name="GenericDetailActivity.FragmentClass" android:value="au.com.eqpay.activity.WebFragment" />
+            <extra android:name="GenericDetailActivity.FragmentClass" android:value="au.com.connectedteam.activity.WebFragment" />
             <extra android:name="GenericDetailActivity.Title" android:value="@string/licences" />
             <extra android:name="WebFragment.RequestedURL" android:value="file:///android_asset/licences.html" />
             

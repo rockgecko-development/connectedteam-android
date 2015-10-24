@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="eqpay_color">#0092FF</color>
+    <color name="connected_color">#ffDAEAEF</color>
 
-    <color name="theme_highlight">@color/eqpay_color</color>
-    <color name="theme_highlight_bright">#ff3F92BA</color>
+    <color name="theme_highlight">@color/connected_color</color>
+    <color name="theme_highlight_bright">#ff9DBDC6</color>
 
     <color name="window_background">#FFF5F5F5</color>
 
@@ -15,7 +15,7 @@
     <color name="theme_control_activated">@color/theme_highlight_bright</color>
     <color name="theme_control_highlight">@color/theme_accent</color>
 
-    <color name="text_color_highight">@color/eqpay_color</color>
+    <color name="text_color_highight">@color/connected_color</color>
 
     <color name="body_text_1">#000000</color>
     <color name="body_text_2">#555555</color>
@@ -34,7 +34,7 @@
     <color name="profile_owner">#ff0092FF</color>
     <color name="profile_serviceprovider">#ffEF9609</color>
 
-    <color name="accent_1">#ff3F92BA</color>
+    <color name="accent_1">#ffFF3D2E</color>
 
 
     <color name="action_bar_title">#fff3f3f3</color>
@@ -63,7 +63,7 @@
 
     <color name="card_background">#eeeeee</color>
     <color name="card_primary_cell_bg">#ffffffff</color>
-    <color name="card_activated_colour">@color/eqpay_color</color>
+    <color name="card_activated_colour">@color/connected_color</color>
     <color name="checkout_dark_overlay">#aa000000</color>
 
 
