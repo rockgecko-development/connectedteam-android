@@ -24,12 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ActionButtonStyle"
-            android:text="Add"/>
-        <TextView
-            android:id="@+id/tv_hospitals"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="hospitals"/>
+            android:text="Edit"/>
+
         <com.ns.developer.tagview.widget.TagCloudLinkView
             android:id="@+id/hashtag_hospitals"
             android:layout_width="match_parent"
@@ -42,6 +38,27 @@
             app:deletableTextSize="8sp"
             app:deletableTextColor="#ff9acd32"/>
         </LinearLayout>
+
+    <TextView
+        style="@style/SeparatorText"
+        android:text="What interests you?"/>
+    <AutoCompleteTextView
+        android:id="@+id/autocomplete_tags"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <com.ns.developer.tagview.widget.TagCloudLinkView
+        android:id="@+id/hashtag_tags"
+        android:background="@color/settings_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        app:isDeletable="true"
+        app:tagLayoutColor="#ffffff"
+        app:tagTextSize="8sp"
+        app:tagTextColor="@color/tag_text_colour"
+        app:deletableTextSize="8sp"
+        app:deletableTextColor="#ff9acd32"/>
 
     <TextView
         android:layout_width="match_parent"

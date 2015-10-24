@@ -4,9 +4,16 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidquery.AQuery;
 
@@ -28,6 +35,7 @@ import java.util.List;
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseFragment;
 import au.com.connectedteam.adapter.HashtagAdapters;
+import au.com.connectedteam.models.ConnectedConstants;
 import au.com.connectedteam.util.FuncEx;
 import au.com.connectedteam.util.StringUtils;
 
@@ -39,6 +47,7 @@ public class PreferencesFragment extends BaseFragment{
 
     private AQuery aq;
     private List<ParseObject> mHospitalAvails;
+    private List<ParseObject> mTagAvails;
     private ParseObject mSettings;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -79,16 +88,47 @@ public class PreferencesFragment extends BaseFragment{
                 }
             });
         }
+        if(mTagAvails==null){
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("TagAvail");
+            query.findInBackground(new FindCallback<ParseObject>() {
+                @Override
+                public void done(List<ParseObject> objects, ParseException e) {
+                    mTagAvails = objects;
+                    modelToUIIfReady();
+                }
+            });
+        }
 
+    }
+    private void addTagToUser(String tag){
+        ParseUser user = ParseUser.getCurrentUser();
+        List<String> tags = user.getList("tags");
+        if (tags == null) tags = new ArrayList<>();
+        if(!tags.contains(tag)) {
+            if(tags.size()>= ConnectedConstants.MAX_NOTIFICATION_TAGS){
+                Toast.makeText(getActivity(), String.format("You can only subscribe to %d tags", ConnectedConstants.MAX_NOTIFICATION_TAGS), Toast.LENGTH_SHORT).show();
+                return;
+            }
+            tags.add(tag);
+            user.put("tags", tags);
+            user.saveInBackground();
+        }
+    }
+    private void removeTagFromUser(String tag){
+        ParseUser user = ParseUser.getCurrentUser();
+        List<String> tags = user.getList("tags");
+        if (tags == null) tags = new ArrayList<>();
+        tags.remove(tag);
+        user.put("tags", tags);
+        user.saveInBackground();
     }
 
     private void modelToUIIfReady(){
-        if(isResumed() && mHospitalAvails!=null) modelToUI();
+        if(isResumed() && mHospitalAvails!=null && mTagAvails!=null) modelToUI();
     }
     private void modelToUI(){
         List<String> hospitals = ParseUser.getCurrentUser().getList("hospitals");
         if(hospitals==null) hospitals = new ArrayList<>();
-        aq.id(R.id.tv_hospitals).text(StringUtils.stringListToString(hospitals, ", ", false));
 
         TagCloudLinkView hospitalHashtags = (TagCloudLinkView) aq.id(R.id.hashtag_hospitals).getView();
 
@@ -99,8 +139,58 @@ public class PreferencesFragment extends BaseFragment{
             hospitalHashtags.add(new Tag(1, tag));
         }
         hospitalHashtags.drawTags();
-           // hospitalHashtags.setData(hospitals, HashtagAdapters.HASH);
-         //   hospitalHashtags.setVisibility(View.VISIBLE);
+
+        List<String> tags = ParseUser.getCurrentUser().getList("tags");
+        if(tags==null) tags = new ArrayList<>();
+        TagCloudLinkView hashTags = (TagCloudLinkView) aq.id(R.id.hashtag_tags).getView();
+        while(hashTags.getTags().size()>0){
+            hashTags.remove(0);
+        }
+        for(String tag : tags){
+            hashTags.add(new Tag(1, tag));
+        }
+        hashTags.drawTags();
+        hashTags.setOnTagDeleteListener(new TagCloudLinkView.OnTagDeleteListener() {
+            @Override
+            public void onTagDeleted(Tag tag, int position) {
+                removeTagFromUser(tag.getText());
+                modelToUIIfReady();
+            }
+        });
+
+        AutoCompleteTextView tagAutocomplete = (AutoCompleteTextView) aq.id(R.id.autocomplete_tags).getView();
+        final List<String> allTags = Func.map(mTagAvails, new Function<ParseObject, String>() {
+            @Override
+            public String apply(ParseObject parseObject) {
+                return parseObject.getString("title");
+            }
+        });
+        ArrayAdapter<String> tagAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, allTags);
+        tagAutocomplete.setAdapter(tagAdapter);
+        tagAutocomplete.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    String tag = textView.getText().toString().trim();
+                    if(allTags.contains(tag)){
+                        addTagToUser(tag);
+                        textView.setText("");
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+        tagAutocomplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                addTagToUser((String) adapterView.getItemAtPosition(i));
+                aq.id(R.id.autocomplete_tags).text("");
+                modelToUIIfReady();
+            }
+        });
+
 
     }
 
@@ -157,6 +247,7 @@ public class PreferencesFragment extends BaseFragment{
     private void onSubmitClicked(){
         View focussed = getView().findFocus();
         if(focussed!=null) focussed.clearFocus();
+        getActivity().finish();
     }
     @Override
     public boolean isRequesting() {
