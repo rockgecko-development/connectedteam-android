@@ -9,12 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidquery.AQuery;
+import com.ns.developer.tagview.entity.Tag;
+import com.ns.developer.tagview.widget.TagCloudLinkView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import au.com.connectedteam.R;
@@ -128,11 +132,26 @@ public class FeedListFragment extends ListOrExpandableListFragment {
         @Override
         public View getItemView(ParseObject event, View convertView, ViewGroup parent) {
             if(convertView==null){
-                convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_simple_2_line, parent, false);
+                convertView= LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_event, parent, false);
             }
             aqCell.recycle(convertView);
-            aqCell.id(R.id.text1).text(StringUtils.stringListToString(event.getList("tags"), ", ", false));
-            aqCell.id(R.id.text2).text(event.getString("blurb"));
+            aqCell.id(R.id.text1).text(event.getString("hospital"));
+            aqCell.id(R.id.textDate).text(StringUtils.formatDateStandard(event.getDate("startDate")));
+
+            List<String> tags = event.getList("tags");
+            if(tags==null) tags = new ArrayList<>();
+            TagCloudLinkView hashTags = (TagCloudLinkView) aqCell.id(R.id.hashtag_tags).getView();
+            while(hashTags.getTags().size()>0){
+                hashTags.remove(0);
+            }
+            for(String tag : tags){
+                hashTags.add(new Tag(1, tag));
+            }
+            hashTags.drawTags();
+
+            aqCell.id(R.id.textOwnerName).text("Doctor name");
+            aqCell.id(R.id.textHeadCount).text(String.format("%d/%d places", 1,2));
+
             return convertView;
         }
     }

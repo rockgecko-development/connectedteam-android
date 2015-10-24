@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="connected_color">#ffDAEAEF</color>
+    <color name="connected_dark_background">#ff272F32</color>
 
     <color name="theme_highlight">@color/connected_color</color>
     <color name="theme_highlight_bright">#ff9DBDC6</color>
