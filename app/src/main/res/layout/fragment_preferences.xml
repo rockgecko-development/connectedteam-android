@@ -30,16 +30,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="hospitals"/>
-        <com.greenfrvr.hashtagview.HashtagView
+        <com.ns.developer.tagview.widget.TagCloudLinkView
             android:id="@+id/hashtag_hospitals"
-            style="@style/HashtagView"
-            app:rowGravity="left"
-            app:tagBackground="@drawable/tag_hospital"
-            app:tagPaddingBottom="@dimen/tag_padding_vertical"
-            app:tagPaddingLeft="@dimen/tag_padding_horizontal"
-            app:tagPaddingRight="@dimen/tag_padding_horizontal"
-            app:tagPaddingTop="@dimen/tag_padding_vertical"
-            app:tagTextColor="@color/tag_text_colour"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            app:isDeletable="false"
+            app:tagLayoutColor="#ffffff"
+            app:tagTextSize="8sp"
+            app:tagTextColor="@color/tag_text_colour"
+            app:deletableTextSize="8sp"
+            app:deletableTextColor="#ff9acd32"/>
         </LinearLayout>
 
     <TextView

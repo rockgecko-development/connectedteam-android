@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.androidquery.AQuery;
-import com.greenfrvr.hashtagview.HashtagView;
+
+import com.ns.developer.tagview.entity.Tag;
+import com.ns.developer.tagview.widget.TagCloudLinkView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -87,15 +89,19 @@ public class PreferencesFragment extends BaseFragment{
         List<String> hospitals = ParseUser.getCurrentUser().getList("hospitals");
         if(hospitals==null) hospitals = new ArrayList<>();
         aq.id(R.id.tv_hospitals).text(StringUtils.stringListToString(hospitals, ", ", false));
-        HashtagView hospitalHashtags = (HashtagView) aq.id(R.id.hashtag_hospitals).getView();
-        if(hospitals.size()==0){
-            hospitalHashtags.setVisibility(View.GONE);
+
+        TagCloudLinkView hospitalHashtags = (TagCloudLinkView) aq.id(R.id.hashtag_hospitals).getView();
+
+        while(hospitalHashtags.getTags().size()>0){
+            hospitalHashtags.remove(0);
         }
-        else{
-            //bug in library with empty tag list
-            hospitalHashtags.setData(hospitals, HashtagAdapters.HASH);
-            hospitalHashtags.setVisibility(View.VISIBLE);
+        for(String tag : hospitals){
+            hospitalHashtags.add(new Tag(1, tag));
         }
+        hospitalHashtags.drawTags();
+           // hospitalHashtags.setData(hospitals, HashtagAdapters.HASH);
+         //   hospitalHashtags.setVisibility(View.VISIBLE);
+
     }
 
     private void showHospitalListDialog(){
