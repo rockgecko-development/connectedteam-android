@@ -21,7 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/small_margin"
         android:gravity="center"
-        android:drawableLeft="@drawable/menu_default"
         android:background="@drawable/card_background_with_states"
         android:text="Card button" />
       
@@ -37,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/small_margin"
         android:gravity="left|center_vertical"
-        android:drawableLeft="@drawable/menu_default"
         android:background="@drawable/card_background_with_states"
         android:text="Packages" />
     
@@ -47,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/small_margin"
         android:gravity="left|center_vertical"
-        android:drawableLeft="@drawable/menu_default"
         android:background="@drawable/card_background_with_states"
         android:text="Car Hire" />
       
@@ -57,7 +54,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/small_margin"
         android:gravity="left|center_vertical"
-        android:drawableLeft="@drawable/menu_default"
         android:background="@drawable/card_background_with_states"
         android:text="Discovery - Where can I go?" />
 
