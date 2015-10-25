@@ -39,6 +39,7 @@ import au.com.connectedteam.util.StringUtils;
 public class EventDetailsFragment extends BaseFragment {
 
     public static final String TAG = "EventDetailsFragment";
+    public static final String ARG_JOIN_EVENT = "EventDetailsFragment.JoinEvent";
     private AQueryEx aq;
 
     private String eventID;
@@ -128,9 +129,9 @@ public class EventDetailsFragment extends BaseFragment {
         ParseObject event = mEvent;
         aq.id(R.id.textHospitalName).text(event.getString("hospital"));
         String location = event.getString("location");
-        location+=StringUtils.isNullOrEmpty(event.getString("room"), "");
+        location+=" "+StringUtils.isNullOrEmpty(event.getString("room"), "");
         aq.id(R.id.textLocation).text(location);
-        aq.id(R.id.textDate).text(StringUtils.formatDate(event.getDate("startDate"), StringUtils.DATE_AND_TIME_SHORT));
+        aq.id(R.id.textDate).text(StringUtils.formatDate(event.getDate("startTime"), StringUtils.DATE_AND_TIME_SHORT));
         int duration = event.getInt("duration");
         int clockRes = Reflect.getImageResId("ic_clock_" + duration);
         if (clockRes==0)clockRes=R.drawable.ic_clock_60;

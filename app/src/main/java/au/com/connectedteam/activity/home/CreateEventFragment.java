@@ -84,7 +84,7 @@ public class CreateEventFragment extends BaseFragment{
             e.put("category", category);
             e.put("hospital", hospital);
             e.put("location", location);
-            e.put("room", room);
+            if(room!=null)e.put("room", room);
             e.put("tags", tags);
             e.put("quota", quota);
             e.put("tags", tags);

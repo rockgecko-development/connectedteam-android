@@ -1,6 +1,7 @@
 package au.com.connectedteam.activity.feed;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -41,6 +42,7 @@ public class FeedActivity extends BaseActivity {
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.setTabTextColors(Color.BLACK, getResources().getColor(R.color.connected_dark_background));
         setupViewPager();
 
 
@@ -133,10 +135,10 @@ public class FeedActivity extends BaseActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-            StringUtils.appendSpan(stringBuilder, TITLES[position], new ForegroundColorSpan(getResources().getColor(R.color.connected_dark_background)));
-            return stringBuilder;
-            //return TITLES[position];
+            //SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+            //StringUtils.appendSpan(stringBuilder, TITLES[position], new ForegroundColorSpan(getResources().getColor(R.color.connected_dark_background)));
+            //return stringBuilder;
+            return TITLES[position];
         }
     }
 

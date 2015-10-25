@@ -201,7 +201,7 @@ public class FeedListFragment extends ListOrExpandableListFragment {
             }
             aqCell.recycle(convertView);
             aqCell.id(R.id.text1).text(event.getString("hospital"));
-            aqCell.id(R.id.textDate).text(StringUtils.formatDate(event.getDate("startDate"), StringUtils.DATE_AND_TIME_SHORT));
+            aqCell.id(R.id.textDate).text(StringUtils.formatDate(event.getDate("startTime"), StringUtils.DATE_AND_TIME_SHORT));
             int duration = event.getInt("duration");
             int clockRes = Reflect.getImageResId("ic_clock_" + duration);
             if (clockRes==0)clockRes=R.drawable.ic_clock_60;
