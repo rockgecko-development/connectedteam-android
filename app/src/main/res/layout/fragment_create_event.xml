@@ -9,6 +9,11 @@
     android:paddingTop="@dimen/margin_top"
     android:paddingBottom="@dimen/margin_bottom">
 
+    <Spinner
+        android:layout_width="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner_category"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

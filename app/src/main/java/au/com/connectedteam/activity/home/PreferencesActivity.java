@@ -3,6 +3,8 @@ package au.com.connectedteam.activity.home;
 import android.os.Bundle;
 import android.view.Window;
 
+import com.parse.ParseUser;
+
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseActivity;
 
@@ -17,6 +19,15 @@ public class PreferencesActivity extends BaseActivity {
         setContentView(R.layout.activity_empty);
         if(getSupportFragmentManager().findFragmentById(R.id.fragment_container_main)==null){
             transactTo(0, new PreferencesFragment(), PreferencesFragment.TAG);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ParseUser user = ParseUser.getCurrentUser();
+        if(user!=null){
+            getSupportActionBar().setSubtitle(user.getEmail());
         }
     }
 }

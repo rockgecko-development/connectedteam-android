@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseActivity;
+import au.com.connectedteam.activity.home.CreateEventActivity;
 import au.com.connectedteam.activity.home.PreferencesActivity;
 import au.com.connectedteam.activity.settings.UserSettingsActivity;
 import au.com.connectedteam.adapter.CustomFragmentPagerAdapter;
@@ -157,6 +158,9 @@ public class FeedActivity extends BaseActivity {
                 break;
             case R.id.menu_app_settings:
                 intent = new Intent(this, UserSettingsActivity.class);
+                break;
+            case R.id.menu_add:
+                intent = new Intent(this, CreateEventActivity.class);
                 break;
             case R.id.menu_filter:
                 showFilter(getMainFragment()==null);

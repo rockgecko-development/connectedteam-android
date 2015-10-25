@@ -1,5 +1,9 @@
 package au.com.connectedteam.activity.home;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -11,7 +15,9 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -22,6 +28,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import net.servicestack.func.Func;
 import net.servicestack.func.Function;
@@ -29,7 +36,9 @@ import net.servicestack.func.Predicate;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import au.com.connectedteam.R;
@@ -37,6 +46,8 @@ import au.com.connectedteam.activity.BaseFragment;
 import au.com.connectedteam.models.ConnectedConstants;
 import au.com.connectedteam.util.AQueryEx;
 import au.com.connectedteam.util.FuncEx;
+import au.com.connectedteam.util.ListUtils;
+import au.com.connectedteam.util.StringUtils;
 
 /**
  * Created by bramleyt on 24/10/2015.
@@ -53,9 +64,40 @@ public class CreateEventFragment extends BaseFragment{
         public String blurb, category, hospital, location, room;
         public List<String> tags;
         public int year, month, day, hour, minute;
-        public int quota;
+        public boolean dateSet, timeSet;
+        public int quota, duration;
         CreateEventViewModel(){
             tags=new ArrayList<>();
+            Calendar cal = Calendar.getInstance();
+            year=cal.get(Calendar.YEAR);
+            month=cal.get(Calendar.MONTH);
+            day=cal.get(Calendar.DAY_OF_MONTH);
+            hour=cal.get(Calendar.HOUR);
+            minute=cal.get(Calendar.MINUTE);
+        }
+        public ParseObject toParseObject(){
+            ParseObject e = new ParseObject("Event");
+            e.put("owner", ParseUser.getCurrentUser());
+            e.put("startTime", toDate());
+            e.put("duration", duration);
+            e.put("blurb", blurb);
+            e.put("category", category);
+            e.put("hospital", hospital);
+            e.put("location", location);
+            e.put("room", room);
+            e.put("tags", tags);
+            e.put("quota", quota);
+            e.put("tags", tags);
+            return e;
+        }
+        public Date toDate(){
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.DAY_OF_MONTH, day);
+            cal.set(Calendar.HOUR, hour);
+            cal.set(Calendar.MINUTE, minute);
+            return cal.getTime();
         }
     }
 
@@ -72,7 +114,8 @@ public class CreateEventFragment extends BaseFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_create_event, container, false);
         aq=new AQueryEx(view);
-        aq.id(R.id.btn_edit_hospitals).clicked(mClickListener);
+        aq.id(R.id.btnDate).clicked(mClickListener);
+        aq.id(R.id.btnTime).clicked(mClickListener);
         aq.id(R.id.btn_submit).clicked(mClickListener);
         return view;
     }
@@ -80,8 +123,11 @@ public class CreateEventFragment extends BaseFragment{
         @Override
         public void onClick(View view) {
             switch (view.getId()){
-                case R.id.btn_edit_hospitals:
-                    showHospitalListDialog();
+                case R.id.btnDate:
+                    showDateDialog();
+                    break;
+                case R.id.btnTime:
+                    showTimeDialog();
                     break;
                 case R.id.btn_submit:
                     onSubmitClicked();
@@ -131,14 +177,53 @@ public class CreateEventFragment extends BaseFragment{
     }
 
 
+
     private void modelToUIIfReady(){
         if(isResumed() && mHospitalAvails!=null && mTagAvails!=null) modelToUI();
     }
     private void modelToUI(){
+        if(mModel.dateSet)
+            aq.id(R.id.btnDate).text(StringUtils.formatDateStandard(mModel.toDate()));
+        else aq.id(R.id.btnDate).text("");
+        if(mModel.timeSet)
+            aq.id(R.id.btnTime).text(String.format("%d:%02d", mModel.hour, mModel.minute));
+        else aq.id(R.id.btnTime).text("");
+        List<String> allDurations = ListUtils.asArrayList(ConnectedConstants.EVENT_DURATIONS);
+        ArrayAdapter<String> durationAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, allDurations);
+        durationAdapter.setDropDownViewResource(android.support.v7.appcompat.R.layout.support_simple_spinner_dropdown_item);
+
+        aq.id(R.id.spinner_duration).adapter(durationAdapter).setSelection(allDurations.indexOf("" + mModel.duration))
+                .itemSelected(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mModel.duration = Integer.parseInt(parent.getItemAtPosition(position).toString());
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
+        List<String> allCategories = ListUtils.asArrayList(ConnectedConstants.EVENT_CATEGORIES);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, allCategories);
+        categoryAdapter.setDropDownViewResource(android.support.v7.appcompat.R.layout.support_simple_spinner_dropdown_item);
+
+        aq.id(R.id.spinner_category).adapter(categoryAdapter).setSelection(allCategories.indexOf(mModel.category))
+                .itemSelected(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        mModel.category = (String) parent.getItemAtPosition(position);
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
+
         List<String> hospitals = ParseUser.getCurrentUser().getList("hospitals");
         if(hospitals==null) hospitals = new ArrayList<>();
-
-
         ArrayAdapter<String> hospitalsAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, hospitals);
         hospitalsAdapter.setDropDownViewResource(android.support.v7.appcompat.R.layout.support_simple_spinner_dropdown_item);
 
@@ -228,40 +313,30 @@ public class CreateEventFragment extends BaseFragment{
 
     }
 
-    private void showHospitalListDialog(){
-        List<String> hospitals = ParseUser.getCurrentUser().getList("hospitals");
-        if(hospitals==null) hospitals = new ArrayList<>();
-        final List<String> selectedHospitals = hospitals;
-        String email = ParseUser.getCurrentUser().getEmail();
-        String domain = email.substring(email.indexOf('@')+1);
-        List<String> allHospitals = getHospitalsForDomain(domain);
-        final String[] allHospitalsArr = Func.toArray(allHospitals,String.class);
-        final boolean[] checked = new boolean[allHospitalsArr.length];
-        for(int i=0;i<checked.length;i++){
-            checked[i]=selectedHospitals.contains(allHospitalsArr[i]);
-        }
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMultiChoiceItems(allHospitalsArr, checked, new DialogInterface.OnMultiChoiceClickListener() {
+    private void showDateDialog(){
+        DatePickerDialog dialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i, boolean b) {
-                if(b){
-                    selectedHospitals.add(allHospitalsArr[i]);
-                }
-                else{
-                    selectedHospitals.remove(allHospitalsArr[i]);
-                }
-            }
-        });
-        builder.setPositiveButton(R.string.done, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                ParseUser user = ParseUser.getCurrentUser();
-                user.put("hospitals", selectedHospitals);
-                user.saveInBackground();
+            public void onDateSet(DatePicker datePicker,  int year, int monthOfYear, int dayOfMonth) {
+                mModel.year=year;
+                mModel.month=monthOfYear;
+                mModel.day=dayOfMonth;
+                mModel.dateSet=true;
                 modelToUIIfReady();
             }
-        });
-        builder.show();
+        }, mModel.year, mModel.month, mModel.day);
+        dialog.show();
+    }
+    private void showTimeDialog(){
+        TimePickerDialog dialog = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int hour, int minute) {
+                mModel.hour=hour;
+                mModel.minute=minute;
+                mModel.timeSet=true;
+                modelToUIIfReady();
+            }
+        }, mModel.hour, mModel.minute, true);
+        dialog.show();
     }
     private List<String> getHospitalsForDomain(final String domain){
         return Func.map(Func.filter(mHospitalAvails, new Predicate<ParseObject>() {
@@ -281,7 +356,37 @@ public class CreateEventFragment extends BaseFragment{
     private void onSubmitClicked(){
         View focussed = getView().findFocus();
         if(focussed!=null) focussed.clearFocus();
-        getActivity().finish();
+        List<String> errors = new ArrayList<>();
+        if(!mModel.dateSet) errors.add("Please set a date");
+        if(!mModel.timeSet) errors.add("Please set a time");
+        if(StringUtils.isNullOrEmpty(mModel.hospital)) errors.add("Please set a hospital");
+        if(StringUtils.isNullOrEmpty(mModel.tags)) errors.add("Please set some tags");
+        if(StringUtils.isNullOrEmpty(mModel.location)) errors.add("Please set a room/location");
+        if(mModel.quota<=0) errors.add("Please enter number of places available");
+        if(errors.size()>0){
+            aq.id(R.id.validation).text(StringUtils.stringListToString(errors, "\n", false));
+        }
+        else{
+            aq.id(R.id.validation).text("");
+            showLoadingDialog(getString(R.string.submitting));
+            ParseObject object = mModel.toParseObject();
+            object.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    dismissDialog();
+                    if(e!=null){
+                        aq.id(R.id.validation).text("Error: "+e.getMessage());
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "Event created", Toast.LENGTH_LONG).show();
+                        getActivity().setResult(Activity.RESULT_OK);
+                        getActivity().finish();
+                    }
+                }
+            });
+
+        }
+
     }
     private int requestingCount;
     @Override
@@ -297,5 +402,19 @@ public class CreateEventFragment extends BaseFragment{
     @Override
     public boolean onBackKeyPressed() {
         return true;
+    }
+
+    private Dialog mDialog;
+    private void showLoadingDialog(String msg){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        View dialogView = LayoutInflater.from(builder.getContext()).inflate(R.layout.dialog_loading, null);
+        ((TextView) dialogView.findViewById(R.id.text1)).setText(msg);
+        builder.setView(dialogView).setCancelable(false);
+        mDialog= builder.show();
+    }
+    private void dismissDialog(){
+        if(mDialog!=null)
+            mDialog.dismiss();
+        mDialog=null;
     }
 }

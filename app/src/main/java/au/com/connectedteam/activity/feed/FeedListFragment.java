@@ -128,6 +128,12 @@ public class FeedListFragment extends ListOrExpandableListFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(!isRequesting()) onRefreshButtonClicked();
+    }
+
     private FeedFilter getFilter(){
         if(getActivity()==null) return null;
         return ((FeedActivity)getActivity()).getFilter();
