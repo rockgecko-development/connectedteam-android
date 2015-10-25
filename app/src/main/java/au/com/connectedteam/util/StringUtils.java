@@ -58,6 +58,7 @@ public class StringUtils {
     public static final String DATE_WEEKDAY = "EEE HH:mm";
     public static final String DATE_MONTHYEAR = "MM/yyyy";
     public static final String DATE_AND_TIME_STANDARD = "dd/MM/yyyy HH:mm";
+    public static final String DATE_AND_TIME_SHORT = "dd/MM HH:mm";
     public static final String DATE_TIMELEFT = "dd/MM/yyyy HH:mm";
 
     public static final String DATE_DOTNET_DATETIME_NOZONE = "yyyy-MM-dd'T'HH:mm:ss";

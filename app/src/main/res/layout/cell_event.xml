@@ -23,11 +23,15 @@
         <TextView android:id="@+id/textDate"
             android:textColor="#ffffff"
             android:gravity="center_vertical"
-            android:drawablePadding="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ic_clock_15"
             tools:text="01/01/2015 8:30"/>
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/imgDate"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_clock_15"/>
 
 </LinearLayout>
 	<LinearLayout
@@ -39,6 +43,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/imgCategory"
             android:src="@drawable/ic_event_assesment"/>
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,9 +58,9 @@
                 android:padding="4dp"
                 app:isDeletable="false"
                 app:tagLayoutColor="@color/theme_highlight"
-                app:tagTextSize="8sp"
+                app:tagTextSize="2dp"
                 app:tagTextColor="@color/tag_text_colour"
-                app:deletableTextSize="8sp"
+                app:deletableTextSize="2dp"
                 app:deletableTextColor="#ff9acd32"/>
             <LinearLayout
                 android:layout_width="match_parent"

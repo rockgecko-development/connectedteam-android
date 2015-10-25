@@ -24,6 +24,9 @@
     <string name="activity_feed">"Feed"</string>
     <string name="activity_preferences">"Preferences"</string>
 
+    <string name="feed_filter_tags_on">"Showing events matching your tag preferences"</string>
+    <string name="feed_filter_tags_off">"Showing all events for your hospitals"</string>
+
 
     <string name="requesting">Loading&#x2026;</string>
     <string name="submitting">Submitting&#x2026;</string>

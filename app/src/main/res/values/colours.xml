@@ -38,8 +38,8 @@
     <color name="accent_1">#ffFF3D2E</color>
 
 
-    <color name="action_bar_title">#fff3f3f3</color>
-    <color name="action_bar_subtitle">#fff3f3f3</color>
+    <color name="action_bar_title">@color/connected_dark_background</color>
+    <color name="action_bar_subtitle">@color/connected_dark_background</color>
 
     <color name="separator_item_background">#ffC5CDD0</color>
     <color name="separator_sub_background">#7f7f7f</color>
