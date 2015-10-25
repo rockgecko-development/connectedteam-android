@@ -53,7 +53,7 @@ public class ConnectedApp extends Application{
 		 Parse.enableLocalDatastore(this);
 
 		 // Add your initialization code here
-		 Parse.initialize(this, "cQNlWSgRjjiNioxGv0fLFFu8ALg4AYvs1i8tqyi9", "2CQOSvltI0j6nrlw3b7l9m3Q6f03DODGsh60qjiv");
+		 Parse.initialize(this, getString(R.string.parse_application_key), getString(R.string.parse_clientid));
 
 		// ParseACL defaultACL = new ParseACL();
 		 // Optionally enable public read access.

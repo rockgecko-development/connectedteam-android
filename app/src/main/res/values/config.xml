@@ -11,8 +11,10 @@
 
      <string name="google_maps_android_api_key">"...TODO..."</string>
 
-     <string name="app_package">au.com.connectedteam</string>
-     <string name="IAppLocaleProvider_impl">au.com.connectedteam.config.ConnectedAppLocaleProvider</string>
+     <string name="parse_application_key">"sdfsdf"</string>
+     <string name="parse_clientid">"sdfsd"</string>
+
+
 
     
 

@@ -19,13 +19,13 @@ import java.util.List;
 
 public class Reflect {
 
-	
+
 	public static Object getValue(Object object, String name) {
 		return getValue(object, name, false);
 	}
 
 	public static Object getValue(Object object, String name,
-			boolean lookSuperClass) {
+								  boolean lookSuperClass) {
 
 		Field field = null;
 		Method method = null;
@@ -78,9 +78,65 @@ public class Reflect {
 
 		return value;
 	}
+	public static boolean setValue(Object object, String name, Object value){
+		return setValue(object, name, value, false);
+	}
+	public static boolean setValue(Object object, String name, Object value,
+								   boolean lookSuperClass) {
+
+		Field field = null;
+		Method method = null;
+
+		Class<?> cls;
+
+		if (object instanceof Class)
+			cls = (Class<?>) object;
+		else
+			cls = object.getClass();
+
+		while (cls != null) {
+
+			try {
+				field = cls.getDeclaredField(name);
+			} catch (SecurityException e1) {
+			} catch (NoSuchFieldException e1) {
+			}
+
+			if (field != null) {
+				try {
+					field.set(object, value);
+					return true;
+				} catch (IllegalArgumentException e) {
+				} catch (IllegalAccessException e) {
+				}
+			}
+
+			if(value!=null) try {
+				method = cls.getDeclaredMethod("set" + name, value.getClass());
+			} catch (SecurityException e) {
+			} catch (NoSuchMethodException e) {
+			}
+			if (method != null) {
+				try {
+					method.invoke(object, value);
+					return true;
+				} catch (IllegalArgumentException e) {
+				} catch (IllegalAccessException e) {
+				} catch (InvocationTargetException e) {
+				}
+			}
+
+			if (lookSuperClass)
+				cls = cls.getSuperclass();
+			else
+				cls = null;
+		}
+
+		return false;
+	}
 	/**
 	 * Get resource id from specified name.
-	 * 
+	 *
 	 * @param fieldName
 	 *            The resource ID but using string format.
 	 * @param cls
@@ -97,7 +153,7 @@ public class Reflect {
 					.substring(0, fieldName.indexOf("."));
 		}
 		Object value = getValue(cls, fieldName);
-		
+
 		if (value == null || !(value instanceof Integer))
 			return 0;
 		return (Integer) value;
@@ -105,7 +161,7 @@ public class Reflect {
 		 * Note: could also use Resources.getIdentifier - but this requires a context.
 		 */
 	}
-	
+
 	/**
 	 * Lookup a resource string with the same name as resId
 	 * @param resId any resource ID with the same name as a resource string
@@ -119,8 +175,8 @@ public class Reflect {
 			Context c = ConnectedApp.getContextStatic();
 			resourceName = c.getResources().getResourceEntryName(resId);
 			stringId= Reflect.getResId(resourceName, R.string.class);
-			return c.getString(stringId);			
-		
+			return c.getString(stringId);
+
 		}
 		catch(NotFoundException e){
 			if(resourceName==null){
@@ -134,7 +190,7 @@ public class Reflect {
 
 	/**
 	 * Get drawable resource id by name.
-	 * 
+	 *
 	 * @param imageName
 	 * @return
 	 */
@@ -146,10 +202,10 @@ public class Reflect {
 		imageName = imageName.indexOf(".") == -1 ? imageName : imageName
 				.substring(0, imageName.indexOf("."));
 
-        return getResId(imageName.toLowerCase(), R.drawable.class);
+		return getResId(imageName.toLowerCase(), R.drawable.class);
         /*
 		try {
-			return getResId(imageName.toLowerCase(), Class.forName(ConnectedApp.getContextStatic().getPackageName()+".R$drawable"));
+			return getResId(imageName.toLowerCase(), Class.forName(EQPayApplication.getContextStatic().getPackageName()+".R$drawable"));
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return 0;
@@ -159,7 +215,7 @@ public class Reflect {
 
 	/**
 	 * Invokes a method from the object.
-	 * 
+	 *
 	 * @param object
 	 * @param selector
 	 * @param parameterClasses
@@ -167,7 +223,7 @@ public class Reflect {
 	 * @return
 	 */
 	public static Object invoke(Object object, String selector,
-			Class<?>[] parameterClasses, Object[] parameterValues) {
+								Class<?>[] parameterClasses, Object[] parameterValues) {
 
 		if (selector == null || selector.length() == 0)
 			return null;
@@ -185,16 +241,16 @@ public class Reflect {
 		return null;
 
 	}
-	
+
 	public static Object invoke(Object object, String selector) {
 		return invoke(object, selector, (Class[]) null,
-		(Object[]) null);
+				(Object[]) null);
 	}
 
 	/**
 	 * Performs a VisibleFromSelector method of the object. See iPhone's
 	 * performSelector method.
-	 * 
+	 *
 	 * @param object
 	 * @param selector
 	 * @return
@@ -206,8 +262,8 @@ public class Reflect {
 			return true;
 		return (Boolean) result;
 
-	}	
-	
+	}
+
 
 
 	public static <T> void writeToParcel(Class<T> modelClass, T instance, Parcel dest, int flags) {
@@ -218,18 +274,18 @@ public class Reflect {
 			for(Field f : modelClass.getDeclaredFields()){
 				//Class<?> fieldClass = f.getType();
 				int modifiers = f.getModifiers();
-				if(Modifier.isStatic(modifiers) 
-						|| Modifier.isFinal(modifiers) 													
+				if(Modifier.isStatic(modifiers)
+						|| Modifier.isFinal(modifiers)
 						|| Modifier.isSynchronized(modifiers)
 						//|| Modifier.isPublic(modifiers)
 						|| Modifier.isVolatile(modifiers)
-						|| Modifier.isTransient(modifiers)){					
+						|| Modifier.isTransient(modifiers)){
 					continue;
 				}
 				boolean changed=false;
 				if(!f.isAccessible()){
 					f.setAccessible(true);
-					changed=true;				
+					changed=true;
 				}
 				if(List.class.isAssignableFrom(f.getType())){
 					dest.writeList((List<?>) f.get(instance));
@@ -237,17 +293,17 @@ public class Reflect {
 				else{
 					dest.writeValue(f.get(instance));
 				}
-				
+
 				if(changed){
 					f.setAccessible(false);
 				}
 			}
-			}
-			catch(Exception e){
-				Log.e("Parcel", "Write to parcel error: ",e);
-			}	
+		}
+		catch(Exception e){
+			Log.e("Parcel", "Write to parcel error: ",e);
+		}
 	}
-	
+
 
 
 	public static <T> void readFromParcel(Class<T> modelClass, T instance, Parcel in) {
@@ -260,18 +316,18 @@ public class Reflect {
 				f = modelClass.getDeclaredFields()[i];
 				//Class<?> fieldClass = f.getType();
 				int modifiers = f.getModifiers();
-				if(Modifier.isStatic(modifiers) 
-						|| Modifier.isFinal(modifiers) 													
+				if(Modifier.isStatic(modifiers)
+						|| Modifier.isFinal(modifiers)
 						|| Modifier.isSynchronized(modifiers)
 						//|| Modifier.isPublic(modifiers)
 						|| Modifier.isVolatile(modifiers)
-						|| Modifier.isTransient(modifiers)){					
+						|| Modifier.isTransient(modifiers)){
 					continue;
 				}
 				boolean changed=false;
 				if(!f.isAccessible()){
 					f.setAccessible(true);
-					changed=true;				
+					changed=true;
 				}
 				if(List.class.isAssignableFrom(f.getType())){
 					List<?> newList = (List<?>) f.getType().getConstructor((Class[])null).newInstance();
@@ -281,46 +337,46 @@ public class Reflect {
 				else{
 					f.set(instance, in.readValue(modelClass.getClassLoader()));
 				}
-				
+
 				if(changed){
 					f.setAccessible(false);
 				}
-				
+
 			}
 		}
 		catch(Exception e){
 			Log.e("Parcel", "Read from parcel error: "+f,e);
 		}
 	}
-    public static byte[] parcelableToBytes(Parcelable parceable) {
-        Parcel parcel = Parcel.obtain();
-        parceable.writeToParcel(parcel, 0);
-        byte[] bytes = parcel.marshall();
-        parcel.recycle(); // not sure if needed or a good idea
-        return bytes;
-    }
+	public static byte[] parcelableToBytes(Parcelable parceable) {
+		Parcel parcel = Parcel.obtain();
+		parceable.writeToParcel(parcel, 0);
+		byte[] bytes = parcel.marshall();
+		parcel.recycle(); // not sure if needed or a good idea
+		return bytes;
+	}
 
-    public static Parcel bytesToParcel(byte[] bytes) {
-        Parcel parcel = Parcel.obtain();
-        parcel.unmarshall(bytes, 0, bytes.length);
-        parcel.setDataPosition(0); // this is extremely important!
-        return parcel;
-    }
+	public static Parcel bytesToParcel(byte[] bytes) {
+		Parcel parcel = Parcel.obtain();
+		parcel.unmarshall(bytes, 0, bytes.length);
+		parcel.setDataPosition(0); // this is extremely important!
+		return parcel;
+	}
 
-    public static <T> T bytesToParcelable(byte[] bytes, Parcelable.Creator<T> creator) {
-        Parcel parcel = bytesToParcel(bytes);
-        return creator.createFromParcel(parcel);
-    }
-    @SuppressWarnings("unchecked")
-    public static <T> T cloneUsingParcel(T in){
-        Parcel parcel =Parcel.obtain();
-        parcel.writeValue(in);
-        byte[] bytes = parcel.marshall();
-        Parcel unParcel = bytesToParcel(bytes);
-        T copy = (T) unParcel.readValue(in.getClass().getClassLoader());
-        parcel.recycle();
-        unParcel.recycle();
-        return copy;
+	public static <T> T bytesToParcelable(byte[] bytes, Parcelable.Creator<T> creator) {
+		Parcel parcel = bytesToParcel(bytes);
+		return creator.createFromParcel(parcel);
+	}
+	@SuppressWarnings("unchecked")
+	public static <T> T cloneUsingParcel(T in){
+		Parcel parcel =Parcel.obtain();
+		parcel.writeValue(in);
+		byte[] bytes = parcel.marshall();
+		Parcel unParcel = bytesToParcel(bytes);
+		T copy = (T) unParcel.readValue(in.getClass().getClassLoader());
+		parcel.recycle();
+		unParcel.recycle();
+		return copy;
 
-    }
+	}
 }

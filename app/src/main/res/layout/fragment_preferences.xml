@@ -9,22 +9,29 @@
     android:paddingTop="@dimen/margin_top"
 
     android:paddingBottom="@dimen/margin_bottom">
-
-    <TextView
-        style="@style/SeparatorText"
-        android:text="Your Hospitals"/>
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:background="@color/settings_shadow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
+    <TextView
+        style="@style/SeparatorText"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="Your Hospitals"/>
         <Button
             android:id="@+id/btn_edit_hospitals"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/ActionButtonStyle"
             android:text="Edit"/>
+        </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:background="@color/settings_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
 
         <com.ns.developer.tagview.widget.TagCloudLinkView
             android:id="@+id/hashtag_hospitals"
@@ -45,6 +52,7 @@
     <AutoCompleteTextView
         android:id="@+id/autocomplete_tags"
         android:singleLine="true"
+        android:hint="Enter tags here..."
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <com.ns.developer.tagview.widget.TagCloudLinkView
@@ -74,7 +82,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/submit"
-        android:textColor="@drawable/textcolour_button_white"
+        android:textColor="@drawable/textcolour_button_dark"
 
         android:background="@drawable/button_action_solid"/>
 
