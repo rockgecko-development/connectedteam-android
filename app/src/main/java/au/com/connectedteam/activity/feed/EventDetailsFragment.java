@@ -44,6 +44,7 @@ public class EventDetailsFragment extends BaseFragment {
 
     private String eventID;
     private ParseObject mEvent;
+    private boolean mHasJoined;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,19 +89,23 @@ public class EventDetailsFragment extends BaseFragment {
                 else{
                     Toast.makeText(getActivity(), "You're going!", Toast.LENGTH_SHORT).show();
                     aq.id(R.id.btn_submit).enabled(false);
+                    mHasJoined=true;
                 }
             }
         });
     }
-
+private int requestingCount;
     @Override
     public void onResume() {
         super.onResume();
         if(mEvent==null){
-
+            requestingCount=1;
+            getBaseActivity().notifyRefreshing(this, isRequesting());
                 ParseQuery.getQuery("Event").getInBackground(eventID, new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject object, ParseException e) {
+                        requestingCount=0;
+                        getBaseActivity().notifyRefreshing(EventDetailsFragment.this, isRequesting());
                         if (e != null) {
                             new AlertDialog.Builder(getActivity()).setMessage(e.getMessage()).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                                 @Override
@@ -122,7 +127,12 @@ public class EventDetailsFragment extends BaseFragment {
 
     }
     private void modelToUIIfReady(){
-        if(isResumed() && mEvent!=null) modelToUI();
+        if(isResumed() && mEvent!=null){
+            modelToUI();
+            if(getArguments().getBoolean(ARG_JOIN_EVENT) && !mHasJoined){
+                joinEvent();
+            }
+        }
     }
 
     private void modelToUI() {
@@ -174,14 +184,14 @@ public class EventDetailsFragment extends BaseFragment {
             aq.id(R.id.btn_submit).text("Cancel").enabled(false);
         }
         else{
-            aq.id(R.id.btn_submit).text("Reserve").enabled(true);
+            aq.id(R.id.btn_submit).text("Reserve").enabled(!mHasJoined);
 
         }
     }
 
     @Override
     public boolean isRequesting() {
-        return false;
+        return requestingCount>0;
     }
 
     @Override
