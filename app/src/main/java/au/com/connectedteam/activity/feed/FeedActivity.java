@@ -133,9 +133,10 @@ public class FeedActivity extends BaseActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            //SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
-            //StringUtils.appendSpan(stringBuilder, TITLES[position], new ForegroundColorSpan(getResources().getColor(R.color.connected_dark_background)));
-            return TITLES[position];
+            SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+            StringUtils.appendSpan(stringBuilder, TITLES[position], new ForegroundColorSpan(getResources().getColor(R.color.connected_dark_background)));
+            return stringBuilder;
+            //return TITLES[position];
         }
     }
 

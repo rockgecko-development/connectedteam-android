@@ -118,6 +118,7 @@ private int requestingCount;
         }
         setLastValidation("");
         requestingCount=1;
+        onRequestingChanged();
         ParseUser.logInInBackground(email, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {

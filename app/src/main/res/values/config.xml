@@ -3,9 +3,9 @@
     
     
 
-     <string name="server_prod">"http://todo.azurewebsites.net/"</string>
+     <string name="server_prod">"http://parse.com/todo"</string>
 
-     <string name="server_resources">"http://eqpaywebau-dev.azurewebsites.net/"</string>
+     <string name="server_resources">"http://parse.com/"</string>
      <string name="server_gravatar_format">"http://www.gravatar.com/avatar/%1$s.jpg"</string>
      <string name="server_gravatar_icon_empty_link">"http://www.gravatar.com"</string>
 

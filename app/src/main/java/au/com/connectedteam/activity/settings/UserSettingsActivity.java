@@ -242,7 +242,7 @@ public class UserSettingsActivity extends PreferenceActivity implements OnPrefer
 		root.setPadding(padding, padding, padding, padding);
 		root.setOrientation(LinearLayout.VERTICAL);
 		ImageView logo = new ImageView(c);
-		logo.setImageResource(R.drawable.ic_launcher);
+		logo.setImageResource(R.drawable.ic_launcher_large);
 		root.addView(logo, new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		TextView text = new TextView(c);
 		String versionStr="";
