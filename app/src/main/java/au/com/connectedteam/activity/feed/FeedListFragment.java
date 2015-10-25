@@ -1,6 +1,7 @@
 package au.com.connectedteam.activity.feed;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableStringBuilder;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.androidquery.AQuery;
 import com.ns.developer.tagview.entity.Tag;
@@ -29,7 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import au.com.connectedteam.R;
+import au.com.connectedteam.activity.GenericDetailActivity;
 import au.com.connectedteam.activity.ListOrExpandableListFragment;
+import au.com.connectedteam.util.IntentUtil;
 import au.com.connectedteam.util.ListUtils;
 import au.com.connectedteam.util.Reflect;
 import au.com.connectedteam.util.StringUtils;
@@ -126,6 +130,15 @@ public class FeedListFragment extends ListOrExpandableListFragment {
             });
             setListAdapter(adapter);
         }
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        FeedAdapter adapter = (FeedAdapter) getListAdapter();
+        ParseObject obj = adapter.getItem(position);
+        Intent intent = GenericDetailActivity.makeIntent(getActivity(), EventDetailsFragment.class, EventDetailsFragment.TAG, "Session Details");
+        intent.putExtra(IntentUtil.ARG_EVENT_ID, obj.getObjectId());
+        startActivity(intent);
     }
 
     @Override

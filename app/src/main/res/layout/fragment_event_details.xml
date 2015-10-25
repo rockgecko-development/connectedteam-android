@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+    
+    <LinearLayout
+        android:background="@color/connected_dark_background"
+        android:padding="5dp"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <TextView android:id="@+id/textHospitalName"
+	    android:textColor="#ffffff"
+ 		 android:layout_width="0dp"
+        android:layout_weight="1"
+ 		 android:layout_height="wrap_content"
+ 		 
+ 		 tools:text="Hospital name"/>
+        <TextView android:id="@+id/textDate"
+            android:textColor="#ffffff"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="01/01/2015 8:30"/>
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:id="@+id/imgDate"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_clock_15"/>
+
+</LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ListHeadingText"
+        android:id="@+id/textLocation"
+        android:gravity="center_horizontal"
+        android:textColor="@color/connected_dark_background"
+        tools:text="Location"/>
+        <ImageView
+            android:padding="10dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgCategory"
+            android:src="@drawable/ic_event_assesment"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/ListHeadingText"
+        android:id="@+id/textOwnerName"
+        android:gravity="center_horizontal"
+        android:textColor="@color/connected_dark_background"
+        tools:text="Owner name"/>
+
+            <com.ns.developer.tagview.widget.TagCloudLinkView
+                android:id="@+id/hashtag_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="4dp"
+                app:isDeletable="false"
+                app:tagLayoutColor="@color/theme_highlight"
+                app:tagTextSize="12dp"
+                app:tagTextColor="@color/tag_text_colour"
+                app:deletableTextSize="12dp"
+                app:deletableTextColor="#ff9acd32"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/theme_highlight"
+        android:id="@+id/textBlurb"
+        android:layout_margin="10dp"
+        android:textColor="@color/connected_dark_background"
+        android:padding="10dp"
+        tools:text="Blurb"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reserve"
+        android:id="@+id/btn_submit"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="2/3 places"
+        android:textColor="@color/connected_dark_background"
+        android:id="@+id/textHeadCount"/>
+    </LinearLayout>
+
+
