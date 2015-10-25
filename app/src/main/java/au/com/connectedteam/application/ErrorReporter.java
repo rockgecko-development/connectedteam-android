@@ -3,7 +3,8 @@ package au.com.connectedteam.application;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.koushikdutta.ion.Response;
+import com.parse.ParseException;
+
 import au.com.connectedteam.R;
 import au.com.connectedteam.appsapi.ex.ResponseBaseHelper;
 import au.com.connectedteam.appsapi.generated.dto;
@@ -19,24 +20,20 @@ public class ErrorReporter {
         mContext=applicationContext;
     }
 
-    public String onApiErrorGetMessage(Response<?> result){
+    public String onApiErrorGetMessage(Exception result){
         String msg;
         String userMsg;
-        if(result.getException()!=null){
-            userMsg = "Request failed: "+getErrorMessageForUser(result.getException());
-            msg= "Error: "+ result.getException().getMessage()+"\nProd message: "+userMsg;
+        int resultCode=-1;
+        if(result instanceof ParseException){
+            resultCode=((ParseException) result).getCode();
         }
-        else if (result.getResult() instanceof dto.ResponseBase){
-            userMsg = ResponseBaseHelper.formatMessage((dto.ResponseBase) result.getResult());
-            msg=userMsg;
-        }
-        else if (result.getHeaders().code()==401){
+        if (resultCode==ParseException.INVALID_SESSION_TOKEN || resultCode==ParseException.SESSION_MISSING){
             userMsg=mContext.getString(R.string.request_fail_unauthorized);
-            msg= "HTTP "+ result.getHeaders().code()+" "+result.getHeaders().message()+"\nProd message: "+userMsg;
+            msg= result.getMessage()+"\nProd message: "+userMsg;
         }
         else{
             userMsg=mContext.getString(R.string.request_fail_server_error);
-            msg= "HTTP "+ result.getHeaders().code()+" "+result.getHeaders().message()+"\nProd message: "+userMsg;
+            msg= result.getMessage()+"\nProd message: "+userMsg;
         }
 
         if(ConnectedApp.DEBUG){
@@ -46,13 +43,16 @@ public class ErrorReporter {
             return userMsg;
         }
     }
-    public void onApiErrorShowToast(Response<?> result){
+    public void onApiErrorShowToast(Exception result){
         String msg = onApiErrorGetMessage(result);
         Toast.makeText(mContext, msg, Toast.LENGTH_SHORT).show();
 
     }
 
     public String getErrorMessageForUser(Exception exception){
+        if(exception instanceof ParseException){
+
+        }
         return mContext.getString(R.string.request_fail);
     }
 }

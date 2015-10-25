@@ -2,7 +2,6 @@ package au.com.connectedteam.activity.home;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -34,10 +33,7 @@ import java.util.List;
 
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.BaseFragment;
-import au.com.connectedteam.adapter.HashtagAdapters;
 import au.com.connectedteam.models.ConnectedConstants;
-import au.com.connectedteam.util.FuncEx;
-import au.com.connectedteam.util.StringUtils;
 
 /**
  * Created by bramleyt on 24/10/2015.

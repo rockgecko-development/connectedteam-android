@@ -64,19 +64,7 @@ public class UIUtil {
 			 
 		}
 	
-		/*
-		mPaint = new Paint();
-		mPaint.setTextSize(scale(TEXT_SIZE_DIP));
-		mPaint.setTextAlign(Align.CENTER);
-		Typeface robotoMedium = Typeface.createFromAsset(SportingbetApplication.getContextStatic().getAssets(), ROBOTO_MEDIUM);
-		mPaint.setTypeface(robotoMedium);
-		mPaint.setAntiAlias(true);
-		mPaint.setColor(TEXT_COLOUR);
-		
-		//Since we've created it, may as well put it in the cache
-		typeFaceCache.put(ROBOTO_MEDIUM, robotoMedium);
-		
-		*/
+
 	}
 	
 	public static  boolean setSelectedAdapterItem(AdapterView<?> spinner, Object selection){
@@ -465,7 +453,7 @@ public class UIUtil {
 	
 	
 	/**
-	 * Set Roboto font. Does nothing for Centrebet.
+	 * Set Roboto font.
 	 * @param context
 	 * @param view TextView or ViewGroup parent containing TextViews
 	 * @param fontName one of ROBOTO_LIGHT, ROBOTO_REGULAR, ROBOTO_THIN
@@ -478,7 +466,7 @@ public class UIUtil {
 	}
 	
 	/**
-	 * Set Roboto font on a list of views. Does nothing for Centrebet.
+	 * Set Roboto font on a list of views.
 	 * @param context
 	 * @param fontName
 	 * @param args
@@ -541,7 +529,7 @@ public class UIUtil {
 	}
 	
 	/**
-	 * Set Roboto font excluding certain view ids. Does nothing for Centrebet.
+	 * Set Roboto font excluding certain view ids.
 	 * @param context
 	 * @param view TextView or ViewGroup parent containing TextViews
 	 * @param fontName one of ROBOTO_LIGHT, ROBOTO_REGULAR, ROBOTO_THIN

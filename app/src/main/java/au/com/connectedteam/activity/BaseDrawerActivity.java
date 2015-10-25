@@ -19,11 +19,6 @@ import android.widget.TextView;
 import au.com.connectedteam.R;
 import au.com.connectedteam.activity.settings.UserSettingsActivity;
 import au.com.connectedteam.application.Session;
-import au.com.connectedteam.ui.ribbonmenu.IRibbonMenuCallback;
-import au.com.connectedteam.ui.ribbonmenu.MainDrawerMenu;
-import au.com.connectedteam.ui.ribbonmenu.RibbonMenuBase;
-import au.com.connectedteam.ui.ribbonmenu.RibbonMenuItem;
-import au.com.connectedteam.ui.ribbonmenu.RibbonMenuView;
 
 
 

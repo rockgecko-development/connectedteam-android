@@ -203,14 +203,7 @@ public class Reflect {
 				.substring(0, imageName.indexOf("."));
 
 		return getResId(imageName.toLowerCase(), R.drawable.class);
-        /*
-		try {
-			return getResId(imageName.toLowerCase(), Class.forName(EQPayApplication.getContextStatic().getPackageName()+".R$drawable"));
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			return 0;
-		}
-*/
+
 	}
 
 	/**

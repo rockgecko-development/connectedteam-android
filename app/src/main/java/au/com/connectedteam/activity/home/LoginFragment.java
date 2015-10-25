@@ -3,39 +3,27 @@ package au.com.connectedteam.activity.home;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.Response;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import au.com.connectedteam.R;
-import au.com.connectedteam.activity.BaseFragment;
-import au.com.connectedteam.activity.BaseIonFragment;
-import au.com.connectedteam.application.ConnectedApp;
+import au.com.connectedteam.activity.BaseParseFragment;
 import au.com.connectedteam.application.Session;
-import au.com.connectedteam.appsapi.generated.dto;
 import au.com.connectedteam.config.AppConfig;
-import au.com.connectedteam.network.IonHelper;
-import au.com.connectedteam.network.BaseIonCallback;
-import au.com.connectedteam.util.StringUtils;
 
 /**
  * Created by bramleyt on 17/07/2015.
  */
-public class LoginFragment extends BaseIonFragment {
+public class LoginFragment extends BaseParseFragment {
     public static final String TAG = "LoginFragment";
 
     private static final int MIN_USERNAME_PASSWORD_LENGTH=1;

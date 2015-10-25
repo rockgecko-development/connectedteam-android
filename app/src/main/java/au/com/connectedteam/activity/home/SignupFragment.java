@@ -1,6 +1,5 @@
 package au.com.connectedteam.activity.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -12,28 +11,22 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
-import com.koushikdutta.ion.Response;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseQueryAdapter;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 import net.servicestack.func.Func;
 import net.servicestack.func.Function;
-import net.servicestack.func.Predicate;
 
 import au.com.connectedteam.R;
-import au.com.connectedteam.activity.BaseIonFragment;
+import au.com.connectedteam.activity.BaseParseFragment;
 import au.com.connectedteam.application.ConnectedApp;
 import au.com.connectedteam.application.Session;
-import au.com.connectedteam.appsapi.ex.ResponseBaseHelper;
 import au.com.connectedteam.appsapi.ex.CustomerHelper;
-import au.com.connectedteam.appsapi.generated.dto;
 import au.com.connectedteam.util.FuncEx;
-import au.com.connectedteam.util.ParseUtils;
 import au.com.connectedteam.util.StringUtils;
 
 import java.io.Serializable;
@@ -44,7 +37,7 @@ import java.util.List;
 /**
  * Created by bramleyt on 20/07/2015.
  */
-public class SignupFragment extends BaseIonFragment {
+public class SignupFragment extends BaseParseFragment {
 
     public static final String TAG = "SignupFragment";
     public static final String ARG_CUSTOMER = "customer";
@@ -120,6 +113,12 @@ public class SignupFragment extends BaseIonFragment {
         aq.id(R.id.btn_submit).enabled(!isRequesting());
     }
 
+    private int requestingCount;
+    @Override
+    public boolean isRequesting() {
+        return requestingCount>0;
+    }
+
     private void clearFocusAndSubmit() {
         View focussedView = getView().findFocus();
         if (focussedView != null) focussedView.clearFocus();
@@ -143,10 +142,14 @@ public class SignupFragment extends BaseIonFragment {
             aq.id(R.id.validation).text(StringUtils.stringListToString(validationErrors, "\n", false));
         }
         else{
+            requestingCount=1;
+            onRequestingChanged();
             aq.id(R.id.validation).text("");
             parseUser.signUpInBackground(new SignUpCallback() {
                 @Override
                 public void done(ParseException e) {
+                    requestingCount=0;
+                    onRequestingChanged();
                     if (e != null) {
                         new AlertDialog.Builder(getActivity()).setMessage(e.getMessage()).setPositiveButton(R.string.ok, null).show();
                     } else {

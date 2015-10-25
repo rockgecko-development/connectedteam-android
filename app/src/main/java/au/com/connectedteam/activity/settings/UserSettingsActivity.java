@@ -49,7 +49,7 @@ import au.com.connectedteam.util.StringUtils;
 @SuppressWarnings("deprecation")
 public class UserSettingsActivity extends PreferenceActivity implements OnPreferenceClickListener, OnSharedPreferenceChangeListener{
 
-	final static String ACTION_PREFS_GENERAL = "au.com.thedogs.prefs.General";
+	final static String ACTION_PREFS_GENERAL = "au.com.connectedteam.prefs.General";
 	//final static String EXTRA_PREFERENCE_RESOURCE_ID = "preferenceResource";
 	final static String PREF_KEY_ABOUT = "pref_key_about";
 	final static String PREF_KEY_SUPPORT = "pref_key_support";

@@ -29,13 +29,13 @@ public class ConnectedAppLocaleBuilder implements IAppLocaleBuilder{
 
     public ConnectedAppLocaleBuilder(Context c, String countryCode){
         this.mContext=c;
-        //only USA for now
-        mCountryCode ="US";
-        country="United States";
+        //only AU for now
+        mCountryCode ="AU";
+        country="Australia";
         languageCode="en";
-        currency= "US Dollars";
-        currencyCode = "USD";
-        name = "EQPay US";
+        currency= "AU Dollars";
+        currencyCode = "AUD";
+        name = "ConnectED";
         webserviceUrl=mContext.getString(R.string.server_prod);
         /*
         String lCountryCode = countryCode;

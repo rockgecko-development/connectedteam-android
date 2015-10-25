@@ -230,7 +230,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 	protected Fragment getMainFragment() {
 		Fragment fragment =  getSupportFragmentManager().findFragmentById(getMainFragmentContainerId());
 		if(fragment!=null && fragment.isAdded()) return fragment;
-		//if(fragment!=null && SportingbetApplication.DEBUG) throw new RuntimeException("MainFragment not visible: "+fragment.getTag());
 		return null;
 	}
 	
@@ -239,7 +238,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 	}
 
 	/**
-	 * Show a new fragment, add it to the backStack if required, and report the transaction to {@link #pushFragmentTransactionToGTM(Fragment, String)}
+	 * Show a new fragment, add it to the backStack if required
 	 * @param containerId id of the container you want to put the Fragment in. Defaults to {@link #getMainFragmentContainerId()}
 	 * @param fragment the new Fragment
 	 * @param tag tag for the Fragment transaction, can be used later with {@link FragmentManager#findFragmentByTag(String)}
@@ -250,7 +249,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 		return transactTo(containerId, fragment, tag, addToBackStack, 0, 0, 0, 0);
 	}
 	/**
-	 * Show a new fragment, add it to the backStack if required, and report the transaction to {@link #pushFragmentTransactionToGTM(Fragment, String)}
+	 * Show a new fragment, add it to the backStack if required}
 	 * @param containerId id of the container you want to put the Fragment in. Defaults to {@link #getMainFragmentContainerId()}
 	 * @param fragment the new Fragment
 	 * @param tag tag for the Fragment transaction, can be used later with {@link FragmentManager#findFragmentByTag(String)}
@@ -260,7 +259,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 		return transactTo(containerId, fragment, tag, true, 0, 0, 0, 0);
 	}
 	/**
-	 * Show a new fragment, add it to the backStack if required, and report the transaction to {@link #pushFragmentTransactionToGTM(Fragment, String)}
+	 * Show a new fragment, add it to the backStack if required}
 	 * @param containerId id of the container you want to put the Fragment in. Defaults to {@link #getMainFragmentContainerId()}
 	 * @param fragment the new Fragment
 	 * @param tag tag for the Fragment transaction, can be used later with {@link FragmentManager#findFragmentByTag(String)}
@@ -352,7 +351,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 	
 	
 	public void notifyRefreshing(Fragment fragment, boolean refreshing) {
-		//Log.d("DogsRefreshNotify", fragment.getTag()+": "+refreshing);
 
 		if(fragment instanceof BaseFragment){
 			//if(((BaseFragment) fragment).isRequesting()) setRefreshActionButtonState(true);
@@ -374,8 +372,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 		if(fragment instanceof BaseFragment){
 			//if(((BaseFragment) fragment).isRequesting()) setRefreshActionButtonState(true);
 			
-			//Log.d("DogsRefreshAttach", fragment.getTag()+": "+((BaseFragment) fragment).isRequesting());
-			refreshingFragments.put(fragment.getTag(), ((BaseFragment) fragment).isRequesting());			
+			refreshingFragments.put(fragment.getTag(), ((BaseFragment) fragment).isRequesting());
 			updateRefreshActionButtonState();
 		}
 	}

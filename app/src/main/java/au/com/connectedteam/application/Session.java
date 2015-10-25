@@ -13,22 +13,13 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.text.format.DateUtils;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.koushikdutta.async.future.Future;
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Response;
-import com.koushikdutta.ion.builder.Builders;
-import com.parse.Parse;
 import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
-import au.com.connectedteam.appsapi.generated.dto;
 import au.com.connectedteam.config.AppConfig;
 import au.com.connectedteam.models.AppVersion;
 import au.com.connectedteam.models.UserHeader;
-import au.com.connectedteam.network.IonHelper;
-import au.com.connectedteam.util.StringUtils;
 
 /**
  * Singleton session for for the application.
@@ -314,7 +305,6 @@ public class Session extends Observable{
 		if(isExecutingAutologin){
 			shouldCancelAutologinRequest=true;
 		}
-		getIonHelper().getIon().getCookieMiddleware().clear();
 	}
 	
 	private transient boolean isExecutingAutologin;
@@ -364,28 +354,6 @@ public class Session extends Observable{
 		}
 	}
 
-	private transient IonHelper _ionHelper;
-	private IonHelper getIonHelper(){
-		if(_ionHelper==null)
-			_ionHelper = new IonHelper(new IonHelper.IonHelperCallbacks() {
-
-				@Override
-				public void onIonRequestPreExecute(IonHelper.HelperRequest<?> request) {
-					request.getBuilder().group(Session.this);
-				}
-
-				@Override
-				public void onIonRequestStarting(IonHelper.HelperRequest<?> request) {
-
-				}
-
-				@Override
-				public void onIonRequestFinished(IonHelper.HelperRequest<?> request, Response<?> response) {
-
-				}
-			});
-		return _ionHelper;
-	}
 
 	private void executeAutoLogin(String email, String password) {
 
@@ -396,10 +364,10 @@ public class Session extends Observable{
 	public boolean canExecuteGetUserHeader(){
 		return isLoggedIn() && !isExecutingUserHeader && lastUserHeaderUpdateTime<System.currentTimeMillis()-USER_HEADER_INTERVAL;
 	}
-	public Future<Response<UserHeader>> executeGetUserHeader(){
-		return executeGetUserHeader(false);
+	public void executeGetUserHeader(){
+		 executeGetUserHeader(false);
 	}
-	public Future<Response<UserHeader>> executeGetUserHeader(boolean forceRefresh){
+	public void executeGetUserHeader(boolean forceRefresh){
 		if(forceRefresh) lastUserHeaderUpdateTime=0;
 		if(canExecuteGetUserHeader()) {
 			isExecutingUserHeader=true;
@@ -417,7 +385,6 @@ public class Session extends Observable{
 						}
 					}); */
 		}
-		return null;
 	}
 
 	public void executeLogout(){

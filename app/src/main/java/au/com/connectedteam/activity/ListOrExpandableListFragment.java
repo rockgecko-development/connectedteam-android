@@ -46,7 +46,7 @@ import au.com.connectedteam.util.StringUtils;
  * to switch to the framework's implementation.  See the framework SDK
  * documentation for a class overview.
  */
-public abstract class ListOrExpandableListFragment extends BaseIonFragment {
+public abstract class ListOrExpandableListFragment extends BaseParseFragment {
 	
 	static final int INTERNAL_EXPANDABLE_LIST_ID = R.id.expandable_list;
 	
@@ -342,7 +342,6 @@ public abstract class ListOrExpandableListFragment extends BaseIonFragment {
 				}
 			}				
 			
-			if(TheDogsApplication.DEBUG && false) Log.d("TimeUpdater", "Children: "+count + " updated: "+updated);
 			return true;
 			
 		}

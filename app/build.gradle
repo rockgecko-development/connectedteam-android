@@ -25,12 +25,9 @@ android {
 }
 
 dependencies {
-    compile project(':segmentedControl')
-    compile project(':ion')
     compile project(':ParseUI-Widget')
     compile project(':tagCloudLinkView')
 
-    compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:cardview-v7:23.1.0'

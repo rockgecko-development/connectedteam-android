@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import com.koushikdutta.async.future.FutureCallback;
-import com.koushikdutta.ion.Response;
 import au.com.connectedteam.application.ConnectedApp;
 import au.com.connectedteam.application.Session;
 

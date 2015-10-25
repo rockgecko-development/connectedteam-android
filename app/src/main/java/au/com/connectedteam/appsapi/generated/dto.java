@@ -1,7 +1,7 @@
 /* Options:
 Date: 2015-08-25 13:05:28
 Version: 1
-BaseUrl: http://192.168.5.29/EQPay.ServiceStack
+BaseUrl: http://192.168.5.29/XXXX.ServiceStack
 
 Package: au.com.connectedteam.appsapi.generated
 GlobalNamespace: dto

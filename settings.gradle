@@ -1,2 +1,2 @@
-include ':segmentedControl', ':AndroidAsync', ':ion', ':ParseUI-Widget', ':tagCloudLinkView'
+include ':ParseUI-Widget', ':tagCloudLinkView'
 include ':app'
