@@ -297,7 +297,8 @@ public class CreateEventFragment extends BaseFragment{
         aq.id(R.id.edit_location_ward).bindString(mModel, "location");
         aq.id(R.id.edit_location_room).bindString(mModel, "room");
         aq.id(R.id.edit_blurb).bindString(mModel, "blurb");
-        aq.id(R.id.edit_heads).text(""+mModel.quota).getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        String headsText = mModel.quota>0?(""+mModel.quota):"";
+        aq.id(R.id.edit_heads).text(headsText).getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus){

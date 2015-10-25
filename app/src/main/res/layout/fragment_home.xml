@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/login_button"
-            android:textColor="@drawable/textcolour_button_white"
+            android:textColor="@drawable/textcolour_button_dark"
 
             android:background="@drawable/button_transparent"/>
         <Button
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/signup_button"
-            android:textColor="@drawable/textcolour_button_white"
+            android:textColor="@drawable/textcolour_button_dark"
             android:background="@drawable/button_transparent"/>
     </LinearLayout>
 
