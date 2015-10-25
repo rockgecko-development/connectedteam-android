@@ -6,6 +6,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import au.com.connectedteam.activity.home.PreferencesActivity;
 import au.com.connectedteam.activity.settings.UserSettingsActivity;
 import au.com.connectedteam.adapter.CustomFragmentPagerAdapter;
 import au.com.connectedteam.util.IntentUtil;
+import au.com.connectedteam.util.StringUtils;
 
 /**
  * Created by bramleyt on 24/10/2015.
@@ -129,6 +132,8 @@ public class FeedActivity extends BaseActivity {
 
         @Override
         public CharSequence getPageTitle(int position) {
+            //SpannableStringBuilder stringBuilder = new SpannableStringBuilder();
+            //StringUtils.appendSpan(stringBuilder, TITLES[position], new ForegroundColorSpan(getResources().getColor(R.color.connected_dark_background)));
             return TITLES[position];
         }
     }

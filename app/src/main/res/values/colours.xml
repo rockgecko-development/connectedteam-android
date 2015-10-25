@@ -11,7 +11,7 @@
     <color name="theme_primary">@color/theme_highlight</color>
     <color name="theme_primary_dark">#ff005FA6</color>
 
-    <color name="theme_accent">#ffffff</color>
+    <color name="theme_accent">#ff272F32</color>
     <color name="theme_control_normal">@color/theme_highlight</color>
     <color name="theme_control_activated">@color/theme_highlight_bright</color>
     <color name="theme_control_highlight">@color/theme_accent</color>

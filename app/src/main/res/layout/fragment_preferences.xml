@@ -33,9 +33,9 @@
             android:padding="4dp"
             app:isDeletable="false"
             app:tagLayoutColor="#ffffff"
-            app:tagTextSize="8sp"
+            app:tagTextSize="12dp"
             app:tagTextColor="@color/tag_text_colour"
-            app:deletableTextSize="8sp"
+            app:deletableTextSize="12dp"
             app:deletableTextColor="#ff9acd32"/>
         </LinearLayout>
 
@@ -55,9 +55,9 @@
         android:padding="4dp"
         app:isDeletable="true"
         app:tagLayoutColor="#ffffff"
-        app:tagTextSize="8sp"
+        app:tagTextSize="12sp"
         app:tagTextColor="@color/tag_text_colour"
-        app:deletableTextSize="8sp"
+        app:deletableTextSize="12sp"
         app:deletableTextColor="#ff9acd32"/>
 
     <TextView

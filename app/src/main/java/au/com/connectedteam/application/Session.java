@@ -20,6 +20,7 @@ import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Response;
 import com.koushikdutta.ion.builder.Builders;
 import com.parse.Parse;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
 
 import au.com.connectedteam.appsapi.generated.dto;
@@ -255,6 +256,10 @@ public class Session extends Observable{
 	}
 	public void setCustomerHeader(ParseUser customerData, String password){
 		if(ParseUser.getCurrentUser()==customerData) {
+			ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+			installation.put("user", customerData);
+			installation.saveInBackground();
+
 			mEmail = customerData.getEmail();
 			mPassword = password;
 

@@ -58,9 +58,9 @@
                 android:padding="4dp"
                 app:isDeletable="false"
                 app:tagLayoutColor="@color/theme_highlight"
-                app:tagTextSize="2dp"
+                app:tagTextSize="12dp"
                 app:tagTextColor="@color/tag_text_colour"
-                app:deletableTextSize="2dp"
+                app:deletableTextSize="12dp"
                 app:deletableTextColor="#ff9acd32"/>
             <LinearLayout
                 android:layout_width="match_parent"

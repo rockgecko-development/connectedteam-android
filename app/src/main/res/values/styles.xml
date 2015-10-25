@@ -122,7 +122,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:minHeight">@dimen/bottom_action_button_height</item>
-        <item name="android:textColor">@drawable/textcolour_button_white</item>
+        <item name="android:textColor">@drawable/textcolour_button_dark</item>
         <item name="android:background">@drawable/button_action_solid</item>
 
     </style>
